@@ -27,7 +27,7 @@
                         </div>
                      </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" th:if="${#strings.isEmpty(userId)}">
+                <ul class="nav navbar-nav navbar-right" th:if="${session.login_user==null}">
                     <!--未登陆-->
                     <li>
                         <p class="navbar-text"><a href="/signin" th:href="@{/signin}">登录</a></p>
@@ -36,16 +36,16 @@
                         <p class="navbar-text"><a href="/signup" th:href="@{/signup}">注册</a></p>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" th:if="${!#strings.isEmpty(userId)}">
+                <ul class="nav navbar-nav navbar-right" th:if="${session.login_user!=null}">
                     <!--已登陆-->
                     <li>
                         <p class="navbar-text"><a href="/" th:href="@{/}">首页</a></p>
                     </li>
                     <li>
-                        <p class="navbar-text"><a href="/member/${sessionScope.username}" th:text="${session.username}">Demo</a></p>
+                        <p class="navbar-text"><a href="/member/${sessionScope.username}" th:text="${session.login_user.username}">Demo</a></p>
                     </li>
                     <li>
-                        <p class="navbar-text"><a href="/settings">设置</a></p>
+                        <p class="navbar-text"><a href="/settings" th:href="@{/user/settings}">设置</a></p>
                     </li>
                     <li>
                         <p class="navbar-text"><a href="javascript:signout_confirm();">登出</a></p>
@@ -60,7 +60,7 @@
             var r=confirm("确定退出?")
             if (r==true)
             {
-                window.location.href="/signout";
+                window.location.href="/user/signout";
             }
             else
             {
