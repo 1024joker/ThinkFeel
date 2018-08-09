@@ -15,5 +15,8 @@
     <select id="loginCheck" resultType="com.mxthd.bean.User">
         select * from user where username=#{param1} and password=#{param2}
     </select>
+    <select id="findById" resultType="com.mxthd.bean.User">
+         select * from user where id=#{id}
+    </select>
 
 </mapper>

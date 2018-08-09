@@ -9,28 +9,25 @@
     <!-- 未登录 -->
     <div class="panel panel-default" id="sidebar2" style="width: 20%;margin:1% 2% 1% 0%;float: right" th:if="${session.login_user==null}">
         <div class="panel-heading" style="background-color: white;text-align: center">
-            <blockquote>
-                Genesis
-                <small>一个分享创造的开发者社区</small>
-            </blockquote>
+            您当前是游客身份访问
         </div>
-        <ul class="list-group" style="width: 100%">
-            <li class="list-group-item">
-                <a  href="/signin" th:href="@{/signin}" class="btn btn-primary btn-block">登录</a>
-                <a  href="/signup" th:href="@{/signup}" class="btn btn-default btn-block">注册</a>
-            </li>
-        </ul>
+        <!--<ul class="list-group" style="width: 100%">-->
+            <!--<li class="list-group-item">-->
+                <!--<a  href="/signin" th:href="@{/signin}" class="btn btn-primary btn-block">登录</a>-->
+                <!--<a  href="/signup" th:href="@{/signup}" class="btn btn-default btn-block">注册</a>-->
+            <!--</li>-->
+        <!--</ul>-->
     </div>
 
     <!-- 已登录 -->
     <div class="panel panel-default" id="sidebar2" style="width: 20%;margin:1% 2% 1% 0%;float: right" th:if="${session.login_user!=null}">
-        <div class="panel-heading" style="background-color: white;text-align: center">
-            <a href="/member/${user.username}" th:href="@{/member/}+${session.login_user.username}" th:text="${session.login_user.username}"></a>
-        </div>
+        <!--<div class="panel-heading" style="background-color: white;text-align: center">-->
+            <!--<a href="/member/${user.username}" th:href="@{/member/}+${session.login_user.username}" th:text="${session.login_user.username}"></a>-->
+        <!--</div>-->
         <ul class="list-group" style="width: 100%">
             <li class="list-group-item"><a href="/new" th:href="@{/new}">创作新主题</a></li>
             <li class="list-group-item"><a href="">0条未读提醒</a></li>
-            <li class="list-group-item"><a href="" th:text="'积分:'+${session.login_user.credit}">积分:${user.credit}</a></li>
+            <!--<li class="list-group-item"><a href="" th:text="'积分:'+${session.login_user.credit}">积分:${user.credit}</a></li>-->
         </ul>
     </div>
 

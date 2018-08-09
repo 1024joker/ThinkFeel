@@ -6,4 +6,7 @@
     <select id="findBySlug" resultType="com.mxthd.bean.Topic">
         select * from topic where slug=#{slug}
     </select>
+    <select id="findAll" resultType="com.mxthd.bean.Topic">
+        select * from topic
+    </select>
 </mapper>

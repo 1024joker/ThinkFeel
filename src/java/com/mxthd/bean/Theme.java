@@ -1,19 +1,38 @@
 package com.mxthd.bean;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 主题表
  */
 public class Theme {
     private Integer id;
-    private Integer uid;
     private Date createTime;
     private Date updateTime;
     private String title;
-    private String context;
+    private String content;
     private Integer click;
     private Integer topicId;
+    private User user;
+    private List<Tag> tags;
+    private Integer commentCount;//评论数
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
     public Integer getId() {
         return id;
@@ -21,14 +40,6 @@ public class Theme {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
     }
 
     public Date getCreateTime() {
@@ -55,12 +66,12 @@ public class Theme {
         this.title = title;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Integer getClick() {
@@ -77,5 +88,13 @@ public class Theme {
 
     public void setTopicId(Integer topicId) {
         this.topicId = topicId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

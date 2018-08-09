@@ -13,4 +13,6 @@ public interface UserMapper {
     void addUser(User user);
     //用户登陆
     User loginCheck(String username,String password);
+    //按id查询
+    User findById(Integer id);
 }

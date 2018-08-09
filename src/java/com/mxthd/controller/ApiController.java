@@ -7,7 +7,12 @@ import com.mxthd.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
 @Controller
 @RequestMapping("/api")
@@ -57,6 +62,35 @@ public class ApiController {
         modelAndView.addObject("hmail",mail);
         modelAndView.addObject("hcode",code);
         return modelAndView;
+    }
+
+    /**
+     * 编辑器上传图片插件
+     * @param file
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/upload/editormdPic",produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String uploadEditormdpic(
+            @RequestParam(value = "editormd-image-file",required = true)MultipartFile file,
+            HttpServletRequest request,HttpServletResponse response){
+        String trueFileName = file.getOriginalFilename();//临时获取文件名
+        String suffix = trueFileName.substring(trueFileName.lastIndexOf("."));//获取文件后缀.jpg
+        String fileName = System.currentTimeMillis()+"_"+CodeUtils.getCode(6)+suffix;//生成文件名xxx.jpg
+        String path = request.getSession().getServletContext().getRealPath("/static/img/upload/");
+        try {
+            File targetFile = new File(path, fileName);
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+            //保存
+            file.transferTo(targetFile);
+        }catch (Exception e){
+            return "{success: 0, message: \"上传失败\"}";
+        }
+        return "{\"success\": 1, \"message\":\"上传成功\",\"url\":\"/static/img/upload/" + fileName + "\"}";
     }
 
 }
