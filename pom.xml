@@ -56,6 +56,12 @@
       <artifactId>mybatis</artifactId>
       <version>${mybatis.version}</version>
     </dependency>
+    <!--Mybatis 分页-->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.1.4</version>
+    </dependency>
     <!--Sprint Mybatis 适配包-->
     <dependency>
       <groupId>org.mybatis</groupId>

@@ -43,5 +43,8 @@
     <update id="addClick">
         update theme set click=click+1 where id=#{id}
     </update>
+    <insert id="addCommentCount">
+        update theme set comment_count=comment_count+1,update_time=now() where id=#{id}
+    </insert>
 
 </mapper>

@@ -56,6 +56,9 @@
         .label{
             margin-right: 5px;
         }
+        #doc-content img{
+              max-width:100%;
+        }
     </style>
 </head>
 <body>
@@ -98,13 +101,13 @@
     <div class="panel panel-default" style="" th:if="${comments}!=null and ${comments.size()>0}">
         <div class="panel-heading" style="background-color: white">
         <span>
-                3 回复  |  直到 2018-2-08 22:31:48
+            <span th:text="${theme.commentCount}">0</span> 回复  |  直到 2018-2-08 22:31:48
         </span>
         </div>
         <ul class="list-group" style="width: 100%">
             <!-- 遍历评论 -->
                 <li class="list-group-item" th:each="comment:${comments}">
-                    <div style="height: 50px">
+                    <div style="height: 50px;">
                         <div style="float: left;width: 6%;margin-bottom: 5px">
                             <img width="50px" height="50px" src="${reply.user.avatar} " th:src="${comment.user.avatar}" class="img-rounded">
                         </div>

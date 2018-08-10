@@ -11,4 +11,5 @@ public interface ThemeMapper {
     Theme findTid(Integer tid);
     List<Theme> findBytagId(Integer tagId);
     void addClick(Integer id);
+    void addCommentCount(Integer id);
 }

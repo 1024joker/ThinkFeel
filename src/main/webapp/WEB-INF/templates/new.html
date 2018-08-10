@@ -164,7 +164,7 @@
                     $("#msg").text(result.message);
                     if(result.state==0){
                         //发布成功
-                        alert(result.data)
+                        window.location.href="/t/"+result.data;
                     }
                 }
             })

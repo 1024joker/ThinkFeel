@@ -55,7 +55,7 @@
         <a th:text="${topic.name}" th:href="'/go/'+${topic.slug}"></a> 话题下的最新主题
     </div>
     <ul class="list-group" style="width: 100%">
-        <li class="list-group-item" th:each="theme:${themes}">
+        <li class="list-group-item" th:each="theme:${page.list}">
             <div style="height: 50px">
                 <div style="float: left;width: 6%;margin-bottom: 5px">
                     <img width="50px" height="50px" src="${topic.user.avatar}" th:src="${url}+${theme.user.avatar}" class="img-rounded">
@@ -74,6 +74,13 @@
                 </div>
             </div>
         </li>
+        <ul class="pagination" style="margin-left: 20px">
+            <li th:class="${page.hasPreviousPage?'':'disabled'}"><a href="" th:href="'?p='+${page.prePage}" >&laquo;</a></li>
+            <li th:class="${Pages==page.pageNum?'active':''}" th:each="Pages,userStat:${page.navigatepageNums}">
+                <a th:text="${Pages}" th:href="'?p='+${Pages}"></a>
+            </li>
+            <li th:class="${page.hasNextPage?'':'disabled'}"><a href="#" th:href="'?p='+${page.nextPage}">&raquo;</a></li>
+        </ul>
     </ul>
 </div>
 <!-- 引入侧边栏文件 -->
