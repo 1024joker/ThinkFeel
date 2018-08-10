@@ -3,6 +3,8 @@ package com.mxthd.bean;
 import java.util.Date;
 
 public class Comments {
+
+    //
     private Integer id;
     private Integer themeId;//主题对应ip
     private Date createDate;//创建时间
