@@ -56,4 +56,7 @@ public class ThemeService {
     public void addClick(Integer id){
         themeMapper.addClick(id);
     }
+    public void addCommentCount(Integer id){
+        themeMapper.addCommentCount(id);
+    }
 }

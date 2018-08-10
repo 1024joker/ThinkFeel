@@ -10,6 +10,8 @@ import java.util.List;
 public class CommentsService {
     @Autowired
     CommentsMapper commentsMapper;
+    @Autowired
+    ThemeService themeService;
 
     public List<Comments> findByTid(Integer tid){
         return commentsMapper.findBythemeId(tid);
@@ -17,6 +19,8 @@ public class CommentsService {
     
     public void add(String content,Integer tid,Integer uid){
         commentsMapper.add(content,tid,uid);
+        //评论后给主题评论数+1
+        themeService.addCommentCount(tid);
         //评论后  给主题者发送通知
     }
 }
