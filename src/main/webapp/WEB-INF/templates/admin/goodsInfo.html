@@ -24,8 +24,8 @@
         <div th:replace="admin/common/left :: left"></div>
         <!--商品信息主体区域-->
         <div class="layui-body" id="tab_body">
-            <div style="padding: 15px;">
-                内容主体区域
+            <div style="padding: 15px;" id="tab_content">
+
             </div>
         </div>
 
@@ -38,6 +38,10 @@
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
+    });
+    $("#goods_type").click(function () {
+        //测试
+        $("#tab_content").append("<h3></h3>").append("哈哈哈哈哈哈");
     });
 </script>
 </body>
