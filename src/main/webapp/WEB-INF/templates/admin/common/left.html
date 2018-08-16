@@ -1,0 +1,45 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="left" class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item" id="goods_manage">
+                    <a class="" href="javascript:;">商品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" id="goods_type">商品信息</a></dd>
+                        <dd><a href="javascript:;" id="goods_info">商品分类信息</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">用户信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">用户信息管理</a></dd>
+                        <dd><a href="javascript:;">用户积分操作与查询</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">订单信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">订单列表</a></dd>
+                        <dd><a href="javascript:;">兑换记录</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">兑换信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">会员兑换排行</a></dd>
+                        <dd><a href="javascript:;">会员积分统计</a></dd>
+                        <dd><a href="javascript:;">产品兑换统计</a></dd>
+                        <dd><a href="javascript:;">产品兑换明细</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">   </li>
+                <li class="layui-nav-item">   </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

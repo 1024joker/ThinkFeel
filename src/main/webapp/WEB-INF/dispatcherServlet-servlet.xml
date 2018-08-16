@@ -34,7 +34,7 @@
     <mvc:resources location="/static/js/" mapping="/js/**" />
     <mvc:resources location="/static/css/" mapping="/css/**" />
     <mvc:resources location="/static/editormd/" mapping="/editormd/**" />
-    <mvc:resources location="/static/layui" mapping="/layui/**"/>
+    <mvc:resources location="/static/layui/" mapping="/layui/**"/>
     <!--&lt;!&ndash;配置前台数据拦截器&ndash;&gt;-->
     <mvc:interceptors>
         <mvc:interceptor>
