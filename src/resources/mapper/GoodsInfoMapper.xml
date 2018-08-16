@@ -1,16 +1,30 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mxthd.dao"><!--!!!-->
+<mapper namespace="com.mxthd.dao.GoodsInfoMapper"><!--!!!-->
     <!--多对一association级联查询，-->
     <resultMap id="GoodInfoMap" type="com.mxthd.bean.Goods">
         <id column="id" property="id"/>
-        <result column="goodsClass" property="goodsClass"/>
-        <result column="gender" property="gender"/>
-        <result column="email" property="email"/>
-        <result column="d_id" property="dId"/>
+        <result column="goodsclass_id" property="goodsclassId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="marketprice" property="marketprice"/>
+        <result column="creditprice" property="creditprice"/>
+        <result column="stock" property="stock"/>
+        <result column="exchange_count" property="exchangeCount"/>
+        <result column="click" property="click"/>
+        <result column="type" property="type"/>
+        <result column="click" property="click"/>
+        <result column="post" property="post"/>
+        <association property="goodsClass"
+                     select="crud.dao.GoodsClassMapper.getAllGoodsType"
+                     column="goodsclass_id">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
     </resultMap>
-    <select id="">
-        
+    <select id="getAllGoods" resultMap="GoodInfoMap">
+        select * from goods
+        WHERE 1=1
     </select>
 </mapper>
