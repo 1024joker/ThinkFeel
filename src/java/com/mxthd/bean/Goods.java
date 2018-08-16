@@ -4,7 +4,7 @@ package com.mxthd.bean;
 */
 public class Goods {
     private Integer id; //商品id
-    private Integer goodsClass; //分类id
+    private Integer goodsclassId; //分类id
     private String title; //商品标题
     private String content; //礼品介绍
     private Float marketprice; //市场价格
@@ -14,6 +14,19 @@ public class Goods {
     private Integer click; //浏览次数
     private Integer type; //是否能够重复兑换（0 表示不重复  1表示可重复）
     private Integer post;//是否上架（0 表示上架 1 表示未上架）
+    private GoodsClass goodsClass;
+
+    public Integer getGoodsclassId() {
+        return goodsclassId;
+    }
+
+    public void setGoodsclassId(Integer goodsclassId) {
+        this.goodsclassId = goodsclassId;
+    }
+
+    public void setGoodsClass(GoodsClass goodsClass) {
+        this.goodsClass = goodsClass;
+    }
 
     public Integer getId() {
         return id;
@@ -21,14 +34,6 @@ public class Goods {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getGoodsClass() {
-        return goodsClass;
-    }
-
-    public void setGoodsClass(Integer goodsClass) {
-        this.goodsClass = goodsClass;
     }
 
     public String getTitle() {
