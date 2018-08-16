@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -22,12 +23,14 @@ public class GoodsInfoController {
     * 查询所有员工
     * */
     @RequestMapping("/goods")
+    @ResponseBody
     public JsonResult getAllGoods(@RequestParam(value = "pn", defaultValue = "1")Integer pn){
         //引入分页插件
         PageHelper.startPage(pn,5);//从第一页开始，每页显示5条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
         List<Goods> goods = goodsInfoService.getGoodsInfo();
         PageInfo pageInfo = new PageInfo(goods,5);
+
         JsonResult j = new JsonResult(0,"pageInfo",pageInfo);
         return j;
     }

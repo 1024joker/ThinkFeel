@@ -16,6 +16,10 @@ public class Goods {
     private Integer post;//是否上架（0 表示上架 1 表示未上架）
     private GoodsClass goodsClass;
 
+    public GoodsClass getGoodsClass() {
+        return goodsClass;
+    }
+
     public Integer getGoodsclassId() {
         return goodsclassId;
     }
