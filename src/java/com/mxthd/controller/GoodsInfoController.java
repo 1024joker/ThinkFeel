@@ -26,13 +26,13 @@ public class GoodsInfoController {
     @ResponseBody
     public JsonResult getAllGoods(@RequestParam(value = "pn", defaultValue = "1")Integer pn){
         //引入分页插件
-        PageHelper.startPage(pn,5);//从第一页开始，每页显示5条数据
+        PageHelper.startPage(pn,10);//从第一页开始，每页显示5条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
         List<Goods> goods = goodsInfoService.getGoodsInfo();
         PageInfo pageInfo = new PageInfo(goods,5);
 
-        JsonResult j = new JsonResult(0,"pageInfo",pageInfo);
-        return j;
+        JsonResult json = new JsonResult(0,"pageInfo",pageInfo);
+        return json;
     }
 
 }
