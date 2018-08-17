@@ -15,4 +15,7 @@ public interface UserMapper {
     User loginCheck(String username,String password);
     //按id查询
     User findById(Integer id);
+
+    //在后台查询所有用户的信息
+    List<User> findAllUser(User user);
 }
