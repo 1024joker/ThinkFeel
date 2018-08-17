@@ -40,6 +40,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/ht/**"/>
             <mvc:exclude-mapping path="/editormd/**"/>
             <mvc:exclude-mapping path="/img/**"/>
             <mvc:exclude-mapping path="/js/**"/>
@@ -47,6 +48,17 @@
             <mvc:exclude-mapping path="/favicon.ico"/>
             <mvc:exclude-mapping path="/layui/**"/>
             <bean class="com.mxthd.interceptors.FrontdataInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/ht/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/editormd/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/favicon.ico"/>
+            <mvc:exclude-mapping path="/layui/**"/>
+            <bean class="com.mxthd.interceptors.AdminHandlerInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>
