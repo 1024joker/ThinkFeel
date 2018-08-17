@@ -9,8 +9,5 @@
         <module name="ThinkFeel" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ThinkFeel" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>

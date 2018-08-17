@@ -47,6 +47,9 @@
                     <li>
                         <p class="navbar-text"><a href="/settings" th:href="@{/user/settings}">设置</a></p>
                     </li>
+                    <li th:if="${session.login_user.type==1}">
+                        <p class="navbar-text"><a href="/settings" th:href="@{/ht/goods}">后台管理</a></p>
+                    </li>
                     <li>
                         <p class="navbar-text"><a href="javascript:signout_confirm();">登出</a></p>
                     </li>
