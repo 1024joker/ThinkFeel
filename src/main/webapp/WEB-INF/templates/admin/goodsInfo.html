@@ -13,8 +13,11 @@
     <!--导入js-->
     <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
     <script src="/layui/layui.js" th:src="@{/layui/layui.js}" ></script>
+    <script src="/js/bootstrap.min.js" th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
     <!--layui 导入css-->
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <!--导入bootstrapcss-->
+    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -24,8 +27,25 @@
         <div th:replace="admin/common/left :: left"></div>
         <!--商品信息主体区域-->
         <div class="layui-body" id="tab_body">
-            <div style="padding: 15px;">
-                内容主体区域
+            <div style="padding-top: 40px;padding-left: 30px" class="col-md-12" id="tab_content">
+                <!--显示商品-->
+                <table class="table" id="goods_table">
+                    <thead>
+                    <tr>
+                        <th>商品编号</th>
+                        <th>商品类型</th>
+                        <th>商品标题</th>
+                        <th>兑换商品所需积分</th>
+                        <th>库存</th>
+                        <th>兑换人次</th>
+                        <th>是否能重复兑换</th>
+                        <th>是否上架</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <!--商品信息-->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -38,6 +58,68 @@
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
+    });
+    //当页面加载的时候去第一页
+    $(function () {
+        to_page(1);
+    });
+    //ajax加载数据信息
+    function to_page(pn){
+        $.ajax({
+            url:"/admin/goods",
+            data:"pn="+pn,
+            type:"GET",
+            success:function(result){
+                console.log(result);
+                //解析并显示商品信息
+                build_goods_table(result);
+                //
+
+                //
+            }
+        });
+    };
+    //1.解析并显示原员工
+    function build_goods_table(result) {
+        var goods = result.data.list;
+        /*使用jQuery遍历*/
+        $.each(goods,function (index,item) {
+            var goodsId = $("<td></td>").append(item.id);//商品编号
+            var goodsType = $("<td></td>").append(item.goodsClass.name);//商品类型
+            var goodsTitle = $("<td></td>").append(item.title);//商品标题
+            var goodsCredit = $("<td></td>").append(item.creditprice);//兑换商品所需积分
+            var goodsStock = $("<td></td>").append(item.stock);//商品库存
+            var goodsExCount = $("<td></td>").append(item.exchangeCount);//商品兑换次数
+            var goodsRepeat = $("<td></td>").append(item.type == '0' ?"不能重复兑换":"可以重复兑换");//商品能否重复兑换
+            var goodsPublish = $("<td></td>").append(item.post == '0'?"上架":"未上架");//商品是否上架
+            /*按钮标签*/
+            var editBtn = $("<button></button>").addClass("btn btn-primary edit_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
+                .append("编辑");//编辑按钮
+            var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
+                .append("删除");//删除按钮
+            var btn = $("<span></span>").append(editBtn).append("<span> </span>").append(delBtn);
+            //将td标签添加进一个tr
+            if(item.post == 1) {
+                $("<tr></tr>").append(goodsId).append(goodsType).append(goodsTitle).append(goodsCredit).append(goodsStock)
+                    .append(goodsExCount).append(goodsRepeat).append(goodsPublish).append(btn)
+                    .addClass("warning").appendTo("#goods_table tbody");
+            }else {
+                $("<tr></tr>").append(goodsId).append(goodsType).append(goodsTitle).append(goodsCredit).append(goodsStock)
+                    .append(goodsExCount).append(goodsRepeat).append(goodsPublish).append(btn)
+                    .addClass("active").appendTo("#goods_table tbody");
+            }
+        });
+    }
+
+
+
+    $("#goods_type").click(function () {
+        //每次点击的时候先清空一次
+        $("#goods_table tbody").empty();
+        //当点击商品信息的时候触发函数
+        to_page(1);
     });
 </script>
 </body>

@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mxthd.dao.GoodsClassMapper">
+    <!--基本ResultMap-->
+    <resultMap id="BaseResultMap" type="com.mxthd.bean.GoodsClass">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <!--public GoodsClass getAllGoodsType(Integer id);
+    将商品信息那边传来的id，通过级联查询所有商品类信息-->
+    <select id="getAllGoodsType" resultMap="BaseResultMap">
+        select * from goodsclass WHERE id=#{id}
+    </select>
+</mapper>
