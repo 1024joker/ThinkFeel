@@ -36,14 +36,7 @@
             热议主题
         </div>
         <ul class="list-group" style="width: 100%">
-            <!--<c:forEach items="${hotestTopics}" var="hotestTopic">-->
-                <!--<li class="list-group-item"><a href="/t/${hotestTopic.id}">${hotestTopic.title}</a></li>-->
-            <!--</c:forEach>-->
-            <li class="list-group-item"><a href="/t/7">JDK 9 里的 JDK HTTP Client 的写法</a></li>
-            <li class="list-group-item"><a href="/t/2">你心目中理想的新闻推荐系统是什么样子？</a></li>
-            <li class="list-group-item"><a href="/t/12">Genesis祝各位会员新年好</a></li>
-            <li class="list-group-item"><a href="/t/8">数据库怎么最简单实现 “栈” 结构存储？</a></li>
-            <li class="list-group-item"><a href="/t/9">腾讯云能不能别给我发优惠券短信了</a></li>
+            <li class="list-group-item" th:each="rt,userStat : ${renpingThemes}"><a href="/t/7" th:href="'/t/'+${rt.id}" th:text="${rt.title}">JDK 9 里的 JDK HTTP Client 的写法</a></li>
         </ul>
     </div>
 

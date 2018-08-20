@@ -12,4 +12,8 @@
     <select id="getAllGoodsType" resultMap="BaseResultMap">
         select * from goodsclass WHERE id=#{id}
     </select>
+    <!--//查询所有分类-->
+    <select id="getAll" resultType="com.mxthd.bean.GoodsClass">
+        select * from goodsclass
+    </select>
 </mapper>
