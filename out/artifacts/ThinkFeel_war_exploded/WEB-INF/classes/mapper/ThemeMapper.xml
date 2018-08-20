@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mxthd.dao.ThemeMapper">
+    <resultMap id="ThemeMap" type="com.mxthd.bean.Theme">
+        <id property="id" column="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="title" column="title"/>
+        <result property="context" column="context"/>
+        <result property="click" column="click"/>
+        <result property="topicId" column="topic_id"/>
+        <association property="user" column="uid" select="com.mxthd.dao.UserMapper.findById" />
+    </resultMap>
+    <resultMap id="ThemeMapTag" type="com.mxthd.bean.Theme">
+        <id property="id" column="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="title" column="title"/>
+        <result property="context" column="context"/>
+        <result property="click" column="click"/>
+        <result property="topicId" column="topic_id"/>
+        <association property="user" column="uid" select="com.mxthd.dao.UserMapper.findById" />
+        <association property="tags" column="id" select="com.mxthd.dao.TagMapper.findBythemeId"/>
+    </resultMap>
+
+    <select id="findByTopid" resultMap="ThemeMap">
+        select * from theme where topic_id=#{topicId} group by update_time desc
+    </select>
+    <insert id="addTheme" useGeneratedKeys="true" keyProperty="theme.id">
+        insert into theme(uid,title,content,topic_id)
+        values (#{theme.user.id},#{theme.title},#{theme.content},#{theme.topicId})
+    </insert>
+    <select id="findTid" resultMap="ThemeMapTag">
+        select * from theme where id=#{id}
+    </select>
+    <select id="findBytagId" resultMap="ThemeMap">
+        select a.* from theme a
+        inner join themetotag b on a.id = b.theme_id
+        inner join tag c on c.id=b.tag_id where c.id=#{param1}
+    </select>
+    <update id="addClick">
+        update theme set click=click+1 where id=#{id}
+    </update>
+    <insert id="addCommentCount">
+        update theme set comment_count=comment_count+1,update_time=now() where id=#{id}
+    </insert>
+    <select id="findRenPing" resultType="com.mxthd.bean.Theme">
+      SELECT * FROM theme ORDER BY comment_count DESC LIMIT 5
+    </select>
+
+</mapper>

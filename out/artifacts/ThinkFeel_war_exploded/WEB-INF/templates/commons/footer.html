@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>footer</title>
+</head>
+<body>
+<footer class="footer" th:fragment="footer">
+    <div class="container">
+       <p th:text="${siteName}+'的使命是为创意工作者打造一个最好的社区，他们在这里可以获得灵感，分享想法，找到伙伴，获得通向目标的加速度。'"></p>
+        <br/>
+        <p>创意工作者们的社区</p>
+        <p>♥ Do have faith in what you're doing.</p>
+    </div>
+    <div class="info">
+        <p style="text-align: center;font-size: 16px;">统计信息</p>
+        <ul >
+            <li th:text="'会员数:'+ ${usersNum}">会员数:XXX</li>
+            <li th:text="'话题数: '+${topicsNum}">话题数: XXX</li>
+        </ul>
+    </div>
+    <div class="info">
+        <p style="text-align: center;font-size: 16px;">友情链接</p>
+        <ul >
+            <li><a href="/">Github</a></li>
+            <li><a href="/">Segmentfault</a></li>
+            <li><a href="/">v2ex</a></li>
+        </ul>
+    </div>
+    <div class="info" >
+        <p style="text-align: center;font-size: 16px;">其他信息</p>
+        <ul >
+            <li><a href="/">关于本站</a></li>
+            <li><a href="/">联系我们</a></li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>

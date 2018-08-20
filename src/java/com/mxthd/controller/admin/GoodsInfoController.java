@@ -6,6 +6,7 @@ import com.mxthd.bean.Goods;
 import com.mxthd.service.GoodsInfoService;
 import com.mxthd.util.JsonResult;
 import com.sun.net.httpserver.Authenticator;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +29,24 @@ public class GoodsInfoController {
         //引入分页插件
         PageHelper.startPage(pn,10);//从第一页开始，每页显示5条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
-        List<Goods> goods = goodsInfoService.getGoodsInfo();
+        List<Goods> goods = goodsInfoService.getGoodsInfo(null);
         //导航页码数5页
         PageInfo pageInfo = new PageInfo(goods,5);
         //返回json数据
         JsonResult json = new JsonResult(0,"pageInfo",pageInfo);
         return json;
     }
-
+    /*
+     * 根据标题查询所有员工
+     * */
+    @RequestMapping("/getGoodsByTitle")
+    @ResponseBody
+    public JsonResult getGoodsByTitle(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
+                                      @Param("title") String title){
+        PageHelper.startPage(pn,3);
+        List<Goods> goods1 = goodsInfoService.getGoodsByTitle(title);
+        PageInfo pageInfo = new PageInfo(goods1,5);
+        JsonResult json = new JsonResult(0,"pagesByTitle",pageInfo);
+        return json;
+    }
 }

@@ -12,9 +12,15 @@ public class GoodsInfoService {
     @Autowired
     GoodsInfoMapper goodsInfoMapper;
     /*
-    * 查询所有员工
+    * 查询所有员工（可以接条件）
     * */
-    public List<Goods> getGoodsInfo(){
-        return goodsInfoMapper.getAllGoods(null);
+    public List<Goods> getGoodsInfo(Goods goods){
+        return goodsInfoMapper.getAllGoods(goods);
+    }
+    /*
+    * 根据标题查询
+    * */
+    public List<Goods> getGoodsByTitle(String title){
+        return goodsInfoMapper.getGoodsByTitle(title);
     }
 }
