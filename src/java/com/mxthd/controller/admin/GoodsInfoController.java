@@ -29,8 +29,9 @@ public class GoodsInfoController {
         PageHelper.startPage(pn,10);//从第一页开始，每页显示5条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
         List<Goods> goods = goodsInfoService.getGoodsInfo();
+        //导航页码数5页
         PageInfo pageInfo = new PageInfo(goods,5);
-
+        //返回json数据
         JsonResult json = new JsonResult(0,"pageInfo",pageInfo);
         return json;
     }
