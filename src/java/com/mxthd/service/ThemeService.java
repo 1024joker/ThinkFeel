@@ -59,4 +59,7 @@ public class ThemeService {
     public void addCommentCount(Integer id){
         themeMapper.addCommentCount(id);
     }
+    public List<Theme> findRenPing(){
+        return themeMapper.findRenPing();
+    }
 }

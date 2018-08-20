@@ -12,4 +12,6 @@ public interface ThemeMapper {
     List<Theme> findBytagId(Integer tagId);
     void addClick(Integer id);
     void addCommentCount(Integer id);
+    //查询五条热评主题
+    List<Theme> findRenPing();
 }
