@@ -1,4 +1,4 @@
-package com.mxthd.controller;
+package com.mxthd.controller.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

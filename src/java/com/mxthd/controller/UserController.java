@@ -1,5 +1,7 @@
 package com.mxthd.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mxthd.bean.LoginLog;
 import com.mxthd.bean.User;
 import com.mxthd.dao.LoginLogMapper;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -122,4 +125,7 @@ public class UserController {
         }
         return request.getHeader("x-forwarded-for");
     }
+
+
+
 }

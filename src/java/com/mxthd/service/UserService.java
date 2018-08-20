@@ -53,4 +53,11 @@ public class UserService {
     public User loginCheck(String username,String password){
         return userMapper.loginCheck(username,password);
     }
+
+    /**
+     * 在后台查询所有用户的信息
+     * */
+    public List<User> findAllUser(){
+        return userMapper.findAllUser(null);
+    }
 }

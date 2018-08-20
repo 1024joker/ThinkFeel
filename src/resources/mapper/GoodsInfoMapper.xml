@@ -25,5 +25,8 @@
     <select id="getAllGoods" resultMap="GoodInfoMap">
         select * from goods
         WHERE 1=1
+        <if test="title != null and title!= ''">
+            and title=#{title}
+        </if>
     </select>
 </mapper>
