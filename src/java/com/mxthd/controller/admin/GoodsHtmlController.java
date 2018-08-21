@@ -10,4 +10,10 @@ public class GoodsHtmlController {
     public String togoodsInfo(){
         return "admin/goodsInfo";
     }
+
+    /*编辑商品信息*/
+    @RequestMapping("/editGoods")
+        public String GoodsEdit () {
+            return "admin/goodsEdit";
+    }
 }

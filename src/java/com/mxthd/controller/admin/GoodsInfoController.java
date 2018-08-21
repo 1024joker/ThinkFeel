@@ -21,7 +21,7 @@ public class GoodsInfoController {
     @Autowired
     GoodsInfoService goodsInfoService;
     /*
-    * 查询所有员工
+    * 查询所有商品信息
     * */
     @RequestMapping("/goods")
     @ResponseBody
@@ -37,13 +37,13 @@ public class GoodsInfoController {
         return json;
     }
     /*
-     * 根据标题查询所有员工
+     * 根据标题查询带条件的商品信息
      * */
     @RequestMapping("/getGoodsByTitle")
     @ResponseBody
     public JsonResult getGoodsByTitle(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
                                       @Param("title") String title){
-        PageHelper.startPage(pn,3);
+        PageHelper.startPage(pn,10);
         List<Goods> goods1 = goodsInfoService.getGoodsByTitle(title);
         PageInfo pageInfo = new PageInfo(goods1,5);
         JsonResult json = new JsonResult(0,"pagesByTitle",pageInfo);
