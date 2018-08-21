@@ -25,8 +25,13 @@
     <select id="getAllGoods" resultMap="GoodInfoMap">
         select * from goods
         WHERE 1=1
+    </select>
+    <!--public List<Goods> getGoodsByTitle(String title);-->
+    <select id="getGoodsByTitle" resultMap="GoodInfoMap">
+        select * from goods
+        WHERE 1=1
         <if test="title != null and title!= ''">
-            and title=#{title}
+            and title LIKE '%${title}%'
         </if>
     </select>
 </mapper>

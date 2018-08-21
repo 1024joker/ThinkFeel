@@ -72,6 +72,8 @@
     var totalRecord,currentPage;
     //当页面加载的时候去第一页
     $(function () {
+        $("#users_type").addClass("layui-bg-green");
+        $("#users_info").addClass("layui-nav-itemed");
         to_page(1);
     });
     //ajax加载数据信息
