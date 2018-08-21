@@ -13,13 +13,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GoodsClassController {
     @Autowired
+    GoodsClassService goodsClassService;
+    @Autowired
     GoodsInfoService goodsInfoService;
     @RequestMapping("/gift")
     public ModelAndView showGoodsClass(@RequestParam(value = "t",required = false) Integer t,
                                        @RequestParam(value = "min",required = false) Integer min,
                                        @RequestParam(value = "max",required = false) Integer max){
         ModelAndView modelAndView = new ModelAndView("gift");
-        modelAndView.addObject("goodsClass",goodsInfoService.getHome(t,min,max));
+        modelAndView.addObject("goodsClass",goodsClassService.getAll());
+        modelAndView.addObject("goods",goodsInfoService.getHome(t,min,max));
         modelAndView.addObject("t",t);
         modelAndView.addObject("min",min);
         modelAndView.addObject("max",max);

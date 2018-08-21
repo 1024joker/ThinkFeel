@@ -92,7 +92,7 @@
         <dl class="clearfix"><dt>按分类：</dt><dd>
             <ul>
                 <li><a href="/gift/" th:href="'/gift/'+${min!=null?'?min='+min:''}+${max!=null?'&amp;max='+max:''}" th:class="${t==null?'active':''}">全部</a></li>
-                <li th:each="gClass:${goodsClass}"><a href="/gift/?t=53" th:href="'/gift/?t='+${gClass.id}+${min!=null?'&amp;min='+min:''}+${max!=null?'&amp;max='+max:''}" th:text="${gClass.name}" th:class="${t!=null?t==gClass.id?'active':'':''}">JSP源码</a></li>
+                <li th:each="gClass:${goodsClass}"><a href="/gift/?t=53" th:text="${gClass.name}" th:href="'/gift/?t='+${gClass.id}+${min!=null?'&amp;min='+min:''}+${max!=null?'&amp;max='+max:''}" th:class="${t!=null?t==gClass.id?'active':'':''}">JSP源码</a></li>
             </ul></dd></dl><dl class="clearfix"><dt>按分类：</dt><dd>
         <ul><li><a href="/gift/?t=52" th:href="'/gift/'+${t!=null?'?t='+t:''}" th:class="${min==null or max==null?'active':''}">全部</a></li>
             <li><a href="/gift/?min=0&amp;max=100" th:href="'/gift/?min=0&amp;max=100'+${t!=null?'&amp;t='+t:''}" th:class="${min==0 and max==100?'active':''}">100以下</a></li>
