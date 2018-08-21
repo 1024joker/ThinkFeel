@@ -103,7 +103,7 @@
         <div class="row clearfix">
         <article class="col-lg-4 col-md-4 col-sm-4 archive-gift clearfix" th:each="gd:${goods}">
             <div class="entry-thumbnail gift-thumbnail"><a href="https://hostcoz.com/gift/138" title="WHMCS v6.3.1 完全解码版" th:title="${gd.title}">
-                <img src="图片url" alt="图片描述" th:src="${gd.photo!=null?gd.photo:'/img/gift.jpg'}" style="display: inline;"></a>
+                <img src="图片url" alt="图片描述" th:alt="${gd.title}" th:src="${gd.photo!=null?gd.photo:'/img/gift.jpg'}" style="display: inline;"></a>
             </div>
             <div class="entry-meta">
                 <a href="https://hostcoz.com/gift/138" class="link" th:text="${gd.title}">WHMCS v6.3.1 完全解码版</a><span class="credit" th:text="${gd.creditprice}">9 积分</span>

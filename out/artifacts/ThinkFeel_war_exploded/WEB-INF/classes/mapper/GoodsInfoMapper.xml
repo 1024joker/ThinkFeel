@@ -16,6 +16,7 @@
         <result column="type" property="type"/>
         <result column="click" property="click"/>
         <result column="post" property="post"/>
+        <result column="photo" property="photo"/>
         <association property="goodsClass"
                      select="com.mxthd.dao.GoodsClassMapper.getAllGoodsType"
                      column="goodsclass_id">
@@ -45,7 +46,7 @@
                 and creditprice >= #{min}
             </if>
             <if test="max!=null">
-                and creditprice <= #{max}
+                and creditprice &lt;= #{max}
             </if>
         </where>
     </select>
