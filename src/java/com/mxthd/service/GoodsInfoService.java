@@ -23,4 +23,10 @@ public class GoodsInfoService {
     public List<Goods> getGoodsByTitle(String title){
         return goodsInfoMapper.getGoodsByTitle(title);
     }
+    /*
+     * 首页查询
+     * */
+    public List<Goods> getHome(Integer t,Integer min,Integer max){
+        return goodsInfoMapper.getHome(t,min,max);
+    }
 }
