@@ -15,6 +15,15 @@ public class Goods {
     private Integer type; //是否能够重复兑换（0 表示不重复  1表示可重复）
     private Integer post;//是否上架（0 表示上架 1 表示未上架）
     private GoodsClass goodsClass;
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public GoodsClass getGoodsClass() {
         return goodsClass;
