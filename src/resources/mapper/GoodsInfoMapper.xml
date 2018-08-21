@@ -34,4 +34,19 @@
             and title LIKE '%${title}%'
         </if>
     </select>
+    <!--    public List<Goods> getHome(@Param("t") Integer t,@Param("min") Integer min,@Param("max") Integer max);-->
+    <select id="getHome" resultType="com.mxthd.bean.Goods">
+        select * from goods
+        <where>
+            <if test="t!=null">
+                goodsclass_id = #{t}
+            </if>
+            <if test="min!=null">
+                and creditprice >= #{min}
+            </if>
+            <if test="max!=null">
+                and creditprice &lt;= #{max}
+            </if>
+        </where>
+    </select>
 </mapper>
