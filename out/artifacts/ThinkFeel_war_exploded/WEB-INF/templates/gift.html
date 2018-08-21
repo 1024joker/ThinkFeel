@@ -98,7 +98,8 @@
             <li><a href="/gift/?min=0&amp;max=100" th:href="'/gift/?min=0&amp;max=100'+${t!=null?'&amp;t='+t:''}" th:class="${min==0 and max==100?'active':''}">100以下</a></li>
             <li><a href="/gift/?min=100&amp;max=1000" th:href="'/gift/?min=100&amp;max=1000'+${t!=null?'&amp;t='+t:''}" th:class="${min==100 and max==1000?'active':''}">100-1000</a></li>
             <li><a href="/gift/?min=1000&amp;max=10000" th:href="'/gift/?min=1000&amp;max=10000'+${t!=null?'&amp;t='+t:''}" th:class="${min==1000 and max==10000?'active':''}">1000-10000</a></li>
-            <li><a href="/gift/?min=10000&amp;max=100000" th:href="'/gift/?min=10000&amp;max=100000'+${t!=null?'&amp;t='+t:''}" th:class="${min==10000 and max==100000?'active':''}">10000以上</a></li></ul></dd></dl><div class="tips">当前条件共找到 1 件礼品</div>
+            <li><a href="/gift/?min=10000&amp;max=100000" th:href="'/gift/?min=10000&amp;max=100000'+${t!=null?'&amp;t='+t:''}" th:class="${min==10000 and max==100000?'active':''}">10000以上</a></li></ul></dd></dl>
+        <div class="tips" th:text="'当前条件共找到 '+${goods.size()}+' 件礼品'">当前条件共找到 1 件礼品</div>
         <div class="row clearfix">
         <article class="col-lg-4 col-md-4 col-sm-4 archive-gift clearfix">
             <div class="entry-thumbnail gift-thumbnail"><a href="https://hostcoz.com/gift/138" title="WHMCS v6.3.1 完全解码版">
