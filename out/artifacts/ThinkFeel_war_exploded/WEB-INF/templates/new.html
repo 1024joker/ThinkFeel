@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'创作新主题 - '+${siteName}">创作新主题</title>
+    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="" th:href="@{/editormd/css/editormd.css}" rel="stylesheet"/>
+    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
+    <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
+    <script th:src="@{/editormd/editormd.min.js}"></script>
+    <style>
+        li {list-style-type:none;}
+        html, body {
+            height: 100%;
+            font-size: 14px;
+            color: #525252;
+            font-family: NotoSansHans-Regular,AvenirNext-Regular,arial,Hiragino Sans GB,"Microsoft Yahei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+            background: #f0f2f5;
+        }
+        .footer {
+            background-color: #fff;
+            margin-top: 22px;
+            margin-bottom: 22px;
+            width: 100%;
+            padding-top: 22px;
+            color: #8A8A8A;
+            display: block;
+            height: 200px;
+            border: 1px ;
+            clear:both
+        }
+
+        .container {
+            margin-right: 5%;
+            margin-left: 5%;
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 40%;
+            float: left;
+        }
+        .info {
+            margin-right: 5%;
+            width: 10%;
+            float: left;
+        }
+        a{
+            color: #8A8A8A;
+            cursor: pointer;
+        }
+        .badge{
+            margin-right: 8px;
+            margin-bottom: 3px;
+            background-color: #00c4ff;
+        }
+        .badge a{
+            margin-right: 3px;
+        }
+    </style>
+</head>
+<body>
+<!-- 引入header文件 -->
+<header th:replace="commons/header :: header"></header>
+<div style="width: 70%;margin:1% 2% 1% 5%;float: left;">
+    <div class="panel panel-default" id="main" style="">
+        <div class="panel-heading" style="background-color: white">
+            <a href="/" th:text="${siteName}"></a> › 创作新主题
+        </div>
+        <br/>
+        <div class="form-group">
+            <input type="text" class="form-control" id="title" name="title" placeholder="请输入主题标题，如果标题能够表达完整内容，则正文可以为空" required="required">
+        </div>
+        <div class="form-group">
+            <div id="test-editormd">
+                <textarea style="display:none;" id="context"></textarea>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="panel panel-default" id="sidebar2" style="width: 20%;margin:1% 2% 1% 0%;float: right">
+    <div class="panel-heading" style="background-color: white;text-align: center">
+        发布
+    </div>
+    <ul class="list-group" style="width: 100%">
+        <li class="list-group-item">
+            <h5>发帖提示</h5>
+            <p>
+                请不要发布任何盗版下载链接，包括软件、音乐、电影等等。<span th:text="${siteName}"></span>是创意工作者的社区，我们尊重原创。
+            </p>
+        </li>
+
+        <li class="list-group-item">
+           <button class="btn btn-success" id="tijiao">发布</button>
+            <span style="float: right;color: red" id="msg"></span>
+        </li>
+    </ul>
+</div>
+
+<div class="panel panel-default" id="sidebar1" style="width: 20%;margin:1% 2% 1% 0%;float: right">
+    <div class="panel-heading" style="background-color: white;text-align: center">
+        主题参数
+    </div>
+    <ul class="list-group" style="width: 100%">
+        <li class="list-group-item">
+            <h5>话题</h5>
+            <select class="form-control" id="topicsss">
+                <option th:each="topic:${topics}" th:text="${topic.name}" th:value="${topic.id}">1</option>
+            </select>
+        </li>
+
+        <li class="list-group-item">
+            <h5>标签</h5>
+            <div class="form-group">
+                    <input type="text" class="form-control" id="topic"/>
+            </div>
+            <button type="submit" class="btn btn-primary" id="addtopic">添加</button>
+            <a th:href="@{/}" style="float: right;margin-top: 3px" >从标签库中选择</a>
+            <br>
+            <h5 id="topics">
+
+            </h5>
+        </li>
+    </ul>
+</div>
+<!-- 引入footer文件 -->
+<footer th:replace="commons/footer :: footer"></footer>
+<script>
+    //标签X移除
+    $("#topics").on("click","a",function () {
+        $(this).parent(".badge").remove();
+    })
+    //添加标签
+    $("#addtopic").click(function () {
+        var topic = $("#topic").val().trim();
+        if(topic!=""){
+            $('<span class="badge" name="topic" data-value="'+topic+'"><a><span class="glyphicon glyphicon-remove"></span></a>'+topic+'</span>').appendTo($("#topics"));
+            //删除input内容
+            $("#topic").val("");
+        }
+    })
+    //提交按钮
+    $("#tijiao").click(function () {
+        var title = $("#title").val().trim();//主题标题
+        if(title==""){
+            $("#msg").text("主题标题不能为空");
+            return;
+        }
+        var ifSubmit=confirm("确定发表该主题吗?");
+        if (ifSubmit == true){
+            var context = $("#context").html();//内容
+            var topic = $("#topicsss").val();//话题
+            var tag = new Set();//标签
+            $("#topics>span").each(function () {
+                tag.add($(this).attr("data-value"));
+            })
+            $.ajax({
+                url:"/theme/new",
+                type:"post",
+                data:{"title":title,"context":context,"topicId":topic,"tag":Array.from(tag)},//不能直接传set，无解
+                dataType:"json",
+                success:function (result) {
+                    $("#msg").text(result.message);
+                    if(result.state==0){
+                        //发布成功
+                        window.location.href="/t/"+result.data;
+                    }
+                }
+            })
+        }
+    })
+</script>
+<script type="text/javascript">
+    var testEditor;
+
+    $(function() {
+        testEditor = editormd("test-editormd", {
+            width   : "90%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "/editormd/lib/",
+            saveHTMLToTextarea : true,
+
+            emoji: true,//emoji表情，默认关闭
+            /**上传图片相关配置如下*/
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/api/upload/editormdPic",//注意你后端的上传图片服务地址
+        });
+
+        /*
+        // or
+        testEditor = editormd({
+            id      : "test-editormd",
+            width   : "90%",
+            height  : 640,
+            path    : "../lib/"
+        });
+        */
+        $("#test-editormd").css("width","100%")
+    });
+</script>
+</body>
+</html>

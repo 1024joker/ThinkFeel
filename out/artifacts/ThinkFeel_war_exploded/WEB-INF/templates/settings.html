@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'设置 - '+${siteName}">注册</title>
+    <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
+    <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
+    <style>
+        li {list-style-type:none;}
+        html, body {
+            height: 100%;
+            font-size: 14px;
+            color: #525252;
+            font-family: NotoSansHans-Regular,AvenirNext-Regular,arial,Hiragino Sans GB,"Microsoft Yahei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+            background: #f0f2f5;
+        }
+        .footer {
+            background-color: #fff;
+            margin-top: 22px;
+            margin-bottom: 22px;
+            width: 100%;
+            padding-top: 22px;
+            color: #8A8A8A;
+            display: block;
+            height: 200px;
+            border: 1px ;
+            clear:both
+        }
+
+        .container {
+            margin-right: 5%;
+            margin-left: 5%;
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 40%;
+            float: left;
+        }
+        .info {
+            margin-right: 5%;
+            width: 10%;
+            float: left;
+        }
+        a{
+            color: #8A8A8A;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- 引入header文件 -->
+<header th:replace="commons/header :: header"></header>
+<div style="width: 70%;margin:1% 2% 1% 5%;float: left;">
+    <div class="panel panel-default" id="main" style="">
+        <div class="panel-heading" style="background-color: white">
+            <a href="/" th:text="${siteName}">ThinkFeel</a> › 设置
+        </div>
+
+        <div class="panel-body">
+
+            <form class="form-horizontal" role="form" >
+                <div style="margin-left: 17%">
+                    <img width="60px" height="60px" src="${user.avatar}" th:src="${url}+${user.avatar}" class="img-rounded">
+                    <a class="btn btn-default" href="/settings/avatar" role="button">更换头像</a>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">uid</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${user.id}"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${user.username}">${user.username}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static"  th:text="${user.email}">${user.email}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">注册时间</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${user.createTime}">${user.localCreateTime}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">积分</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static" th:text="${user.credit}">${user.credit}</p>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- 引入侧边栏文件 -->
+<footer th:include="commons/side :: side"></footer>
+
+<!-- 引入footer文件 -->
+<footer th:replace="commons/footer :: footer"></footer>
+<script>
+
+</script>
+</body>
+</html>

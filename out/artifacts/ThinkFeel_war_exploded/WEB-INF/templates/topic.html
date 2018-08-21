@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${topic.name}+' - 话题 - '+${siteName}">注册</title>
+    <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
+    <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
+    <style>
+        li {list-style-type:none;}
+        html, body {
+            height: 100%;
+            font-size: 14px;
+            color: #525252;
+            font-family: NotoSansHans-Regular,AvenirNext-Regular,arial,Hiragino Sans GB,"Microsoft Yahei","Hiragino Sans GB","WenQuanYi Micro Hei",sans-serif;
+            background: #f0f2f5;
+        }
+        .footer {
+            background-color: #fff;
+            margin-top: 22px;
+            margin-bottom: 22px;
+            width: 100%;
+            padding-top: 22px;
+            color: #8A8A8A;
+            display: block;
+            height: 200px;
+            border: 1px ;
+            clear:both
+        }
+
+        .container {
+            margin-right: 5%;
+            margin-left: 5%;
+            padding-left: 15px;
+            padding-right: 15px;
+            width: 40%;
+            float: left;
+        }
+        .info {
+            margin-right: 5%;
+            width: 10%;
+            float: left;
+        }
+        a{
+            color: #8A8A8A;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- 引入header文件 -->
+<header th:replace="commons/header :: header"></header>
+<div class="panel panel-default" id="main" style="width: 70%;margin:1% 2% 5% 5%;float: left;">
+    <div class="panel-heading" style="background-color: white">
+        <a th:text="${topic.name}" th:href="'/go/'+${topic.slug}"></a> 话题下的最新主题
+    </div>
+    <ul class="list-group" style="width: 100%">
+        <li class="list-group-item" th:each="theme:${page.list}">
+            <div style="height: 50px">
+                <div style="float: left;width: 6%;margin-bottom: 5px">
+                    <img width="50px" height="50px" src="${topic.user.avatar}" th:src="${url}+${theme.user.avatar}" class="img-rounded">
+                </div>
+                <div style="width: 89%;float: left">
+                    <a href="/t/${theme.id}" th:href="'/t/'+${theme.id}" th:text="${theme.title}">${theme.title}</a><br/>
+                    <div>
+                        <a th:href="'/go/'+${topic.slug}"><span class="label label-default" th:text="${topic.name}">${topic.tab.tabName}</span></a>&nbsp;&nbsp;&nbsp;
+                        <a href="/member/${theme.user.username}" th:href="'/member/'+${theme.user.username}"><span ><strong th:text="${theme.user.username}">${topic.user.username}</strong></span></a>&nbsp;&nbsp;&nbsp;
+                        <small class="text-muted" th:text="${theme.updateTime}">${topic.localCreateTime}</small>
+                    </div>
+                </div>
+                <div style="width: 5%;float: right;text-align: center">
+                    <!--${topic.countReplies}-->
+                    <span class="badge" th:text="${theme.commentCount}">3</span>
+                </div>
+            </div>
+        </li>
+        <ul class="pagination" style="margin-left: 20px">
+            <li th:class="${page.hasPreviousPage?'':'disabled'}"><a href="" th:href="'?p='+${page.prePage}" >&laquo;</a></li>
+            <li th:class="${Pages==page.pageNum?'active':''}" th:each="Pages,userStat:${page.navigatepageNums}">
+                <a th:text="${Pages}" th:href="'?p='+${page.pageNum}"></a>
+            </li>
+            <li th:class="${page.hasNextPage?'':'disabled'}"><a href="#" th:href="'?p='+${page.nextPage}">&raquo;</a></li>
+        </ul>
+    </ul>
+</div>
+<!-- 引入侧边栏文件 -->
+<footer th:include="commons/side :: side"></footer>
+<!-- 引入footer文件 -->
+<footer th:replace="commons/footer :: footer"></footer>
+</body>
+</html>
