@@ -29,4 +29,13 @@ public class GoodsInfoService {
     public List<Goods> getHome(Integer t,Integer min,Integer max){
         return goodsInfoMapper.getHome(t,min,max);
     }
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    public Goods getById(Integer id){
+        return goodsInfoMapper.getById(id);
+    }
 }

@@ -11,4 +11,6 @@ public interface GoodsInfoMapper {
     public List<Goods> getGoodsByTitle(@Param("title") String title);
 //    首页查询
     public List<Goods> getHome(@Param("t") Integer t,@Param("min") Integer min,@Param("max") Integer max);
+//    根据ID查询
+    public Goods getById(Integer id);
 }

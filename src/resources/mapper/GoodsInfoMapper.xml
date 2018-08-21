@@ -50,4 +50,7 @@
             </if>
         </where>
     </select>
+    <select id="getById" resultType="com.mxthd.bean.Goods">
+        select * from goods where id=#{id}
+    </select>
 </mapper>
