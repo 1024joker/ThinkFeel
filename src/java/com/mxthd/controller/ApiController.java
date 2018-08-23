@@ -88,7 +88,7 @@ public class ApiController {
             //保存
             file.transferTo(targetFile);
         }catch (Exception e){
-            return "{success: 0, message: \"上传失败\"}";
+            return "{\"success\": 0, \"message\": \"上传失败\"}";
         }
         return "{\"success\": 1, \"message\":\"上传成功\",\"url\":\"/static/img/upload/" + fileName + "\"}";
     }

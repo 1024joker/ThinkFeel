@@ -1,6 +1,7 @@
 package com.mxthd.dao;
 
 import com.mxthd.bean.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface UserMapper {
 
     //在后台查询所有用户的信息
     List<User> findAllUser(User user);
+    int Addcredit(@Param("id") Integer id,@Param("credit") Double credit);
 }
