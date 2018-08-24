@@ -1,6 +1,7 @@
 package com.mxthd.controller;
 
 import com.mxthd.bean.Mail;
+import com.mxthd.bean.User;
 import com.mxthd.service.MailService;
 import com.mxthd.service.UserService;
 import com.mxthd.util.*;
@@ -88,9 +89,15 @@ public class ApiController {
             //保存
             file.transferTo(targetFile);
         }catch (Exception e){
-            return "{success: 0, message: \"上传失败\"}";
+            return "{\"success\": 0, \"message\": \"上传失败\"}";
         }
         return "{\"success\": 1, \"message\":\"上传成功\",\"url\":\"/static/img/upload/" + fileName + "\"}";
     }
+    /**
+     * 访问用户信息
+     * @return
+     */
+
+
 
 }

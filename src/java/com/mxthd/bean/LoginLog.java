@@ -12,6 +12,17 @@ public class LoginLog {
     public LoginLog() {
     }
 
+    @Override
+    public String toString() {
+        return "LoginLog{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", loginTime=" + loginTime +
+                ", ip='" + ip + '\'' +
+                ", device='" + device + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

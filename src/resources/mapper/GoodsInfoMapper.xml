@@ -53,4 +53,7 @@
     <select id="getById" resultType="com.mxthd.bean.Goods">
         select * from goods where id=#{id}
     </select>
+    <update id="click">
+        update goods set click=click+1 where id=#{id}
+    </update>
 </mapper>

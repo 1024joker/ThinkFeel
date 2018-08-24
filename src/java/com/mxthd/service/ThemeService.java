@@ -62,4 +62,7 @@ public class ThemeService {
     public List<Theme> findRenPing(){
         return themeMapper.findRenPing();
     }
+    public List<Theme> findAll(){
+        return themeMapper.findAll();
+    }
 }

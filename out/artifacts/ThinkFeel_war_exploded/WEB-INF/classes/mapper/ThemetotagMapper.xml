@@ -1,9 +1,0 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.mxthd.dao.ThemetotagMapper">
-    <insert id="add">
-        insert into themetotag(theme_id,tag_id) values (#{themetotag.themeId},#{themetotag.tagId})
-    </insert>
-</mapper>
