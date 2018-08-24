@@ -11,13 +11,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <!--导入js-->
-    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
-    <script src="/layui/layui.js" th:src="@{/layui/layui.js}" ></script>
-    <script src="/js/bootstrap.min.js" th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
+    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}"></script>
+    <script src="/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+    <script src="/js/bootstrap.min.js" th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
     <!--layui 导入css-->
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <!--导入bootstrapcss-->
-    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}"
+          rel="stylesheet">
     <!--导入编辑模板-->
     <link href="" th:href="@{/editormd/css/editormd.css}" rel="stylesheet"/>
     <script th:src="@{/editormd/editormd.min.js}"></script>
@@ -30,12 +31,85 @@
     <div th:replace="admin/common/left :: left"></div>
     <!--商品信息主体区域-->
     <div class="layui-body" id="tab_body">
-        <div style="padding-top: 10px;padding-left: 30px" class="col-md-12" id="tab_content">
-            <div class="form-group">
-                <div id="test-editormd">
-                    <textarea style="display:none;" id="context"></textarea>
+        <div style="padding-top: 30px;padding-left: 80px" class="col-md-12" id="tab_content">
+            <form class="layui-form layui-form-pane" id="goodsFrom" action="/admin/addGoods" method="post">
+                <fieldset class="layui-elem-field layui-field-title" id="goods_edit_form" style="margin-top: 30px;">
+                    <legend>商品新增与修改</legend>
+                </fieldset>
+                <div class="layui-upload-drag" id="test10">
+                    <i class="layui-icon"></i>
+                    <p>点击上传，或将文件拖拽到此处</p>
                 </div>
-            </div>
+                <div style="height: 15px"></div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="goods_title_input" name="title" required lay-verify="goodsTitle"
+                               placeholder="请输入商品标题"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品类型</label>
+                    <div class="layui-input-block">
+                        <select id="goods_type_select" lay-verify="goodsType" name="goodsclassId">
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品价格</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="goods_price_input" name="marketprice" required lay-verify="number"
+                               placeholder="请输入商品价格"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所需积分</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="creditprice" maxlength="10" id="goods_credit_input" required
+                               lay-verify="number"
+                               placeholder="请输入商品所需积分" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品库存</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="goods_stock_input" name="stock" required lay-verify="number"
+                               placeholder="请输入商品库存"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">重复兑换</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="type" value="0" title="不能重复兑换" checked>
+                        <input type="radio" name="type" value="1" title="可以重复兑换">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否上架</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="post" value="0" title="上架" checked>
+                        <input type="radio" name="post" value="1" title="未上架">
+                    </div>
+                </div>
+                <!--页面模板编辑器-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">详细描述</label>
+                    <div class="form-group">
+                        <div id="test-editormd">
+                            <textarea style="display:none;" name="content" id="content"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" lay-submit lay-filter="demo1" id="submit">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="layui-footer" style="height: 40px">
@@ -45,30 +119,102 @@
 </div>
 <script type="text/javascript">
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
     });
 
+    /*文件上传*/
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        //拖拽上传
+        upload.render({
+            elem: '#test10'
+            , url: '/api/upload/editormdPic'
+            , done: function (res) {
+                console.log(res)
+            }
+        });
+    });
 
+    /*表单渲染 加表单自定义验证*/
+    function renderform() {
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form
+                , layer = layui.layer
+            form.render('select');
+
+            //自定义验证规则
+            form.verify({
+                goodsTitle: function (value, item) {
+                    if (value.length < 4) {
+                        return "内容请输入至少4个字符";
+                    }
+                },
+                goodsType: function (value, item) {
+                    if (value < 1) {
+                        return "请选择商品类型";
+                    }
+                }
+            });
+        });
+    }
 
 
 </script>
+
 <script type="text/javascript">
+    /*下拉框的函数*/
+    function getGoodsType(ele) {
+        /*清空下拉框的选项*/
+        $(ele).empty();
+        $.ajax({
+            url: "/admin/getGoodsType",
+            data: "GET",
+            success: function (result) {
+                var optionBsic = $("<option></option>").append("请选择商品类型").attr("value", "");
+                optionBsic.appendTo(ele);
+                $.each(result.data, function (index) {
+                    var optionEle = $("<option></option>").append(result.data[index].name).attr("value", result.data[index].id);
+                    optionEle.appendTo(ele);
+                });
+                renderform();//重新渲染表单
+            }
+        });
+    };
+    /*当页面加载完之后 加载*/
     var testEditor;
-
-    $(function() {
+    $(function () {
         testEditor = editormd("test-editormd", {
-            width   : "90%",
-            height  : 640,
-            syncScrolling : "single",
-            path    : "/editormd/lib/",
-            saveHTMLToTextarea : true,
-
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
+            path: "/editormd/lib/",
+            saveHTMLToTextarea: true,
             emoji: true,//emoji表情，默认关闭
             /**上传图片相关配置如下*/
-            imageUpload : true,
-            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL : "/api/upload/editormdPic",//注意你后端的上传图片服务地址
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/api/upload/editormdPic",//注意你后端的上传图片服务地址
+        });
+        /*加载下拉框*/
+        getGoodsType("#goods_type_select");
+        $("#test-editormd").css("height", "400px");
+        $("#goods_edit").addClass("layui-bg-green");
+        $("#goods_manage").addClass("layui-nav-itemed");
+    });
+
+    $(document).on("click", "#submit", function () {
+        /*ajax新增商品信息*/
+        $.ajax({
+            url: "/admin/addGoods",
+            type: "POST",
+            data: $("#tab_content form").serialize(),
+            success: function (result) {
+                alert("添加新商品信息成功");
+                var pn = result.data;
+                window.location.href = "/ht/goods?pn=" + pn;
+            }
         });
     });
 </script>

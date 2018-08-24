@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${goods.title}+' - 积分兑换 - '+${siteName}">注册</title>
+    <title th:text="${siteName}">注册</title>
     <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
     <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
@@ -108,22 +108,22 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <div class="entry-thumbnail gift-thumbnail">
-                            <a th:title="${goods.title}">
-                                <img th:src="${goods.photo!=null?goods.photo:'/img/gift.jpg'}" alt="WHMCS v6.3.1 完全解码版" style="display: inline;"></a>
+                            <a href="https://hostcoz.com/gift/138" title="WHMCS v6.3.1 完全解码版">
+                                <img src="http://cdn.img.telefen.com/cms_new/UploadFiles/jfcms/20180704/20180704180315020.jpg" alt="WHMCS v6.3.1 完全解码版" style="display: inline;"></a>
                         </div>
                         <a href="javascript:;" class="btn btn-block btn-exchange btn-default">请先登录</a>
                         <p class="exchange-tips">每人最多兑换 1 次</p>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8">
-                        <h1 class="gift-title" th:text="${goods.title}">商品标题</h1>
+                        <h1 class="gift-title">WHMCS v6.3.1 完全解码版</h1>
                         <ul class="gift-info">
-                            <li class="price"><span class="label">市场价格</span><span th:text="${goods.marketprice}">99.00</span></li>
-                            <li class="credit"><span class="label">所需积分</span><span th:text="${goods.creditprice}">9</span></li>
-                            <li class="stock"><span class="label">库存数量</span><span th:text="${goods.stock}">不限量</span></li>
-                            <li class="buyers"><span class="label">兑换人次</span><span th:text="${goods.exchangeCount}">16</span></li>
-                            <li class="view"><span class="label">浏览次数</span><span th:text="${goods.click}">575</span></li>
+                            <li class="price"><span class="label">市场价格</span><span>99.00</span></li>
+                            <li class="credit"><span class="label">所需积分</span><span>9</span></li>
+                            <li class="stock"><span class="label">库存数量</span><span>不限量</span></li>
+                            <li class="buyers"><span class="label">兑换人次</span><span>16</span></li>
+                            <li class="view"><span class="label">浏览次数</span><span>575</span></li>
                             <li class="express"><span class="label">物流配送</span><span>无须物流</span></li>
-                            <li class="tips"><span class="label">温馨提示</span><span>兑换成功后请留意站内信息与邮件通知，或直接到消费订单内查看！</span></li>
+                            <li class="tips"><span class="label">温馨提示</span><span>兑换成功后请留意信息通知，如有【兑换后可见的内容】可直接查看。</span></li>
                         </ul>
                     </div>
                 </div>
@@ -131,11 +131,8 @@
                 <div>要查看内容请先兑换。</div>
                 <div class="page-header">礼品介绍</div>
                 <div class="entry-content">
-                    <div id="doc-content">
-                        <textarea style="display:none;" th:text="${goods.content}">${message.content }</textarea>
-                    </div>
-                    <!--<p>WHMCS 是一套国外流行的域名主机管理软件，主要在用户管理、财务管理、域名接口、服务器管理面板接口等方面设计的非常人性化。<span class="wp_keywordlink_affiliate">WHMCS</span>是一套全面支持域名注册管理解析，主机开通管理，VPS开通管理和服务器管理的一站式管理软件，目前已经被越来越多的中国IDC使用。</p>-->
-                    <!--<p>本商品是WHMCS v6.3.1 完全解码版，来源于国外某论坛，<span style="color: #ff0000;">本站未测试是否可正常运行！</span>请自行斟酌！</p>-->
+                    <p>WHMCS 是一套国外流行的域名主机管理软件，主要在用户管理、财务管理、域名接口、服务器管理面板接口等方面设计的非常人性化。<span class="wp_keywordlink_affiliate">WHMCS</span>是一套全面支持域名注册管理解析，主机开通管理，VPS开通管理和服务器管理的一站式管理软件，目前已经被越来越多的中国IDC使用。</p>
+                    <p>本商品是WHMCS v6.3.1 完全解码版，来源于国外某论坛，<span style="color: #ff0000;">本站未测试是否可正常运行！</span>请自行斟酌！</p>
                 </div>
             </div>
         </div>

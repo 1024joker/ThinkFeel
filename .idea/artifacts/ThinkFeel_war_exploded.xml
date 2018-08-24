@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="ThinkFeel:war exploded">
-    <output-path>$PROJECT_DIR$/target/thinkfeel</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/ThinkFeel_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -32,6 +32,7 @@
           <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.5" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.5" />
@@ -51,8 +52,6 @@
           <element id="library" level="project" name="Maven: org.codehaus.woodstox:woodstox-core-asl:4.4.1" />
           <element id="library" level="project" name="Maven: org.noggit:noggit:0.8" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.24" />
-          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.47" />
-          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="ThinkFeel/web/Web" />
