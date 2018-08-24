@@ -17,6 +17,7 @@ public class GoodsController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("giftpage");
         modelAndView.addObject("goods",goodsInfoService.getById(id));
+        goodsInfoService.click(id);
         return modelAndView;
     }
 }

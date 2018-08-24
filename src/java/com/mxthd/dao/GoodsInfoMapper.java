@@ -13,6 +13,6 @@ public interface GoodsInfoMapper {
     public List<Goods> getHome(@Param("t") Integer t,@Param("min") Integer min,@Param("max") Integer max);
 //    根据ID查询
     public Goods getById(Integer id);
-//    增加一个商品
-    public Integer addGoods(Goods goods);
+    //访问
+    public void click(Integer id);
 }

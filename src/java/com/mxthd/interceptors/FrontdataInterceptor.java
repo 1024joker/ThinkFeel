@@ -19,7 +19,7 @@ public class FrontdataInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
        //如果返回json，modelAndView是空的
-        if(modelAndView!=null&&!modelAndView.getViewName().startsWith("redirect:")){
+        if(modelAndView!=null&&!modelAndView.getViewName().startsWith("redirect:")&&!modelAndView.getViewName().startsWith("forward:")){
            //网站名
            modelAndView.addObject("siteName",optionsService.getByKey("title").getOptionValue());
             //网站路径
