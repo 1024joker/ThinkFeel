@@ -125,7 +125,6 @@
             © ThinkFeel后台管理系统
         </div>
     </div>
-    <input hidden="hidden" th:value="${pn_n}" id="pn_n">
 <script type="text/javascript">
     //JavaScript代码区域
     layui.use('element', function(){
@@ -136,7 +135,7 @@
     $(function () {
         $("#goods_type").addClass("layui-bg-green");
         $("#goods_manage").addClass("layui-nav-itemed");
-        to_page($("#pn_n").val());
+        to_page(1);
     });
     //ajax加载数据信息
     function to_page(pn){
@@ -145,6 +144,7 @@
             data:"pn="+pn,
             type:"GET",
             success:function(result){
+                console.log(result);
                 //解析并显示商品信息
                 build_goods_table(result);
                 //显示分页条数
@@ -154,6 +154,7 @@
             }
         });
     };
+
     //1.解析并显示原员工
     function build_goods_table(result) {
         $("#goods_table tbody").empty();
@@ -312,8 +313,12 @@
         });
     }
 
-
-
+    /*
+    * 建立编辑的模态框
+    * */
+    $(document).on("click",".edit_btn",function () {
+        window.location.href = "/ht/editGoods?editId="+$(this).attr("edit_id");
+    })
 </script>
 </body>
 </html>

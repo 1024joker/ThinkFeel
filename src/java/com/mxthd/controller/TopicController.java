@@ -40,4 +40,15 @@ public class TopicController {
         modelAndView.addObject("page",page);
         return modelAndView;
     }
+    @RequestMapping("/")
+    public ModelAndView home(@RequestParam(value = "p",defaultValue = "1") Integer p){
+        ModelAndView modelAndView = new ModelAndView();
+        //在查询之前只需要调用。传入页码以及每页的大小
+        PageHelper.startPage(p,10);
+        List<Theme> result = themeService.findAll();
+        PageInfo page = new PageInfo(result,5);//连续显示5页
+        modelAndView.setViewName("home");
+        modelAndView.addObject("page",page);
+        return modelAndView;
+    }
 }

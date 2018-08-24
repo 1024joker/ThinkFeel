@@ -20,6 +20,7 @@
     </select>
     <!--查询后台所有用户的信息-->
     <select id="findAllUser" resultType="com.mxthd.bean.User">
-        select *  from user
+        select *  from user where 1=1
     </select>
+
 </mapper>

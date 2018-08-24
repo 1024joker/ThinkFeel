@@ -39,7 +39,11 @@ public class GoodsInfoService {
         return goodsInfoMapper.getById(id);
     }
 
-    public Integer addGoods(Goods goods) {
-        return goodsInfoMapper.addGoods(goods);
+    /**
+     * 用户访问 click+1
+     * @param id
+     */
+    public void click(Integer id){
+        goodsInfoMapper.click(id);
     }
 }
