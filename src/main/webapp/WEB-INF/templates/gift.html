@@ -99,9 +99,9 @@
             <li><a href="/gift/?min=100&amp;max=1000" th:href="'/gift/?min=100&amp;max=1000'+${t!=null?'&amp;t='+t:''}" th:class="${min==100 and max==1000?'active':''}">100-1000</a></li>
             <li><a href="/gift/?min=1000&amp;max=10000" th:href="'/gift/?min=1000&amp;max=10000'+${t!=null?'&amp;t='+t:''}" th:class="${min==1000 and max==10000?'active':''}">1000-10000</a></li>
             <li><a href="/gift/?min=10000&amp;max=100000" th:href="'/gift/?min=10000&amp;max=100000'+${t!=null?'&amp;t='+t:''}" th:class="${min==10000 and max==100000?'active':''}">10000以上</a></li></ul></dd></dl>
-        <div class="tips" th:text="'当前条件共找到 '+${goods.size()}+' 件礼品'">当前条件共找到 1 件礼品</div>
+        <div class="tips" th:text="'当前条件共找到 '+${count}+' 件礼品'">当前条件共找到 1 件礼品</div>
         <div class="row clearfix">
-        <article class="col-lg-4 col-md-4 col-sm-4 archive-gift clearfix" th:each="gd:${goods}">
+        <article class="col-lg-4 col-md-4 col-sm-4 archive-gift clearfix" th:each="gd:${goods.list}">
             <div class="entry-thumbnail gift-thumbnail"><a href="https://hostcoz.com/gift/138"  th:href="'/gift/'+${gd.id}" title="WHMCS v6.3.1 完全解码版" th:title="${gd.title}">
                 <img src="图片url" alt="图片描述" th:alt="${gd.title}" th:src="${gd.photo!=null?gd.photo:'/img/gift.jpg'}" style="display: inline;"></a>
             </div>
@@ -110,7 +110,15 @@
             </div>
         </article>
         </div>
+
     </div>
+    <ul class="pagination" style="margin-left: 20px">
+        <li th:class="${goods.hasPreviousPage?'':'disabled'}"><a href="" th:href="${goods.hasPreviousPage?'?p='+goods.prePage:'javascript:;'}" >&laquo;</a></li>
+        <li th:class="${Pages==goods.pageNum?'active':''}" th:each="Pages,userStat:${goods.navigatepageNums}">
+            <a th:text="${Pages}" th:href="'?p='+${Pages}"></a>
+        </li>
+        <li th:class="${goods.hasNextPage?'':'disabled'}"><a href="#" th:href="${goods.hasNextPage?'?p='+goods.nextPage:'javascript:;'}">&raquo;</a></li>
+    </ul>
 </div>
 <!-- 引入侧边栏文件 -->
 <footer th:include="commons/side :: side"></footer>
