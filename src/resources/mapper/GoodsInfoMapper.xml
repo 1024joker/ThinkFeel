@@ -50,10 +50,13 @@
             </if>
         </where>
     </select>
+    <!--根据商品id查询信息，然后进行编辑-->
     <select id="getById" resultType="com.mxthd.bean.Goods">
         select * from goods where id=#{id}
     </select>
-    <update id="click">
-        update goods set click=click+1 where id=#{id}
-    </update>
+    <!--新增商品    public Goods addGoods(Goods goods)-->
+    <insert id="addGoods" parameterType="com.mxthd.bean.Goods">
+        INSERT INTO goods(title,content,goodsclass_id,marketprice,creditprice,stock,type,post)
+        VALUES (#{title},#{content},#{goodsclassId},#{marketprice},#{creditprice},#{stock},#{type},#{post})
+    </insert>
 </mapper>

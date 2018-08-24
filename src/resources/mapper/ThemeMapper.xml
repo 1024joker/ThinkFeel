@@ -49,7 +49,5 @@
     <select id="findRenPing" resultType="com.mxthd.bean.Theme">
       SELECT * FROM theme ORDER BY comment_count DESC LIMIT 5
     </select>
-    <select id="findAll" resultMap="ThemeMap">
-        select * from theme group by update_time desc
-    </select>
+
 </mapper>
