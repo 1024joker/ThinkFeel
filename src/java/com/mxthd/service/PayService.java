@@ -31,8 +31,7 @@ public class PayService {
         parameters.put("body","会员ID["+pay.getUid()+"]充值"+pay.getMoney()+"积分，积分充值不支持退款!");//订单m描述
         parameters.put("show_url","http://localhost:8080");//商品展示页
         parameters.put("sign",eapayUtils.signMd5(parameters));//商户签名
-        System.out.println(parameters);
-        String json = HttpUtils.sendPost("https://api.eapay.cc/v1/order/add ", parameters);
+        String json = HttpUtils.sendPost("https://api.eapay.cc/v1/order/add", parameters);
         return json;
     }
     public void payAdd(Pay pay){

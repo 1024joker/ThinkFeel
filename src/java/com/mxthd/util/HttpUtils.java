@@ -190,7 +190,7 @@ public class HttpUtils {
         parameters.put("show_url","http://localhost:8080");//商品展示页
         parameters.put("sign",eapayUtils.signMd5(parameters));//商户签名
 
-        String result =sendPost("https://api.eapay.cc/v1/order/add ", parameters);
+        String result =sendPost("https://api.eapay.cc/v1/order/add", parameters);
         System.out.println(result);
     }
 }

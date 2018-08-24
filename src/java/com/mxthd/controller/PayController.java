@@ -46,6 +46,7 @@ public class PayController {
             pay.setUid(user.getId());
             String result =payService.orderAdd(pay);
             json = JSONObject.parseObject(result);
+            System.out.println("====================="+json);
         }catch (Exception e){
         }
         if(json==null||json.getBoolean("status")==null||!json.getBoolean("status")){
