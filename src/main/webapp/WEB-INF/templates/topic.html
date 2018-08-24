@@ -75,11 +75,11 @@
             </div>
         </li>
         <ul class="pagination" style="margin-left: 20px">
-            <li th:class="${page.hasPreviousPage?'':'disabled'}"><a href="" th:href="${page.hasPreviousPage?'?p='+page.prePage:'javascript:;'}" >&laquo;</a></li>
+            <li th:class="${page.hasPreviousPage?'':'disabled'}"><a href="" th:href="'?p='+${page.prePage}" >&laquo;</a></li>
             <li th:class="${Pages==page.pageNum?'active':''}" th:each="Pages,userStat:${page.navigatepageNums}">
-                <a th:text="${Pages}" th:href="'?p='+${Pages}"></a>
+                <a th:text="${Pages}" th:href="'?p='+${page.pageNum}"></a>
             </li>
-            <li th:class="${page.hasNextPage?'':'disabled'}"><a href="#" th:href="${page.hasNextPage?'?p='+page.nextPage:'javascript:;'}">&raquo;</a></li>
+            <li th:class="${page.hasNextPage?'':'disabled'}"><a href="#" th:href="'?p='+${page.nextPage}">&raquo;</a></li>
         </ul>
     </ul>
 </div>

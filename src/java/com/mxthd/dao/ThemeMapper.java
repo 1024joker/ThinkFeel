@@ -14,5 +14,4 @@ public interface ThemeMapper {
     void addCommentCount(Integer id);
     //查询五条热评主题
     List<Theme> findRenPing();
-    List<Theme> findAll();
 }

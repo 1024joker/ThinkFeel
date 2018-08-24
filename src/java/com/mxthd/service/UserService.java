@@ -57,7 +57,7 @@ public class UserService {
     /**
      * 在后台查询所有用户的信息
      * */
-    public List<User> findAllUser(User users){
-        return userMapper.findAllUser(users);
+    public List<User> findAllUser(){
+        return userMapper.findAllUser(null);
     }
 }
