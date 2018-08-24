@@ -25,8 +25,8 @@ public class UserAdminController {
         //引入分页插件
         PageHelper.startPage(pn,10);//从第一页开始，每页显示5条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
-        List<User> users=userService.findAllUser();
-        PageInfo pageInfo = new PageInfo(users,5);
+        List<User> users=userService.findAllUser(null);
+        PageInfo pageInfo = new PageInfo(users,8);
         //返回json数据
         JsonResult json = new JsonResult(0,"pageInfo",pageInfo);
         return json;
