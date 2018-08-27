@@ -30,4 +30,13 @@
         update user set qqopenid=#{qqopenid} where id=#{id}
     </update>
 
+    <!--在后台按照姓名某户查询-->
+    <!--public List<User> getUsername(String username);-->
+    <select id="getUsername" resultType="com.mxthd.bean.User">
+        select * from user
+        WHERE 1=1
+        <if test="username != null and username!= ''">
+            and username like '%${username}%'
+    </if>
+    </select>
 </mapper>

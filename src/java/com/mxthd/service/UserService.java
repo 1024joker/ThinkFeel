@@ -66,4 +66,9 @@ public class UserService {
     public  void updateQQOpenid(Integer id,String qqOpenid){
         userMapper.updateQQOpenid(id,qqOpenid);
     }
+
+    /**
+     * 在后台按姓名模糊查询*/
+    public List<User> getUsername(String username){ return userMapper.getUsername(username); }
+
 }
