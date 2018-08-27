@@ -111,7 +111,8 @@
                             <a th:title="${goods.title}">
                                 <img th:src="${goods.photo!=null?goods.photo:'/img/gift.jpg'}" alt="WHMCS v6.3.1 完全解码版" style="display: inline;"></a>
                         </div>
-                        <a href="javascript:;" class="btn btn-block btn-exchange btn-default">请先登录</a>
+                        <a href="javascript:;" th:if="${session.login_user==null}" class="btn btn-block btn-exchange btn-default">请先登录</a>
+                        <a href="javascript:;" th:if="${session.login_user!=null}" class="btn btn-block btn-exchange btn-success" data-toggle="modal" data-target="#myModal">立即兑换</a>
                         <p class="exchange-tips">每人最多兑换 1 次</p>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8">
@@ -136,6 +137,27 @@
                     </div>
                     <!--<p>WHMCS 是一套国外流行的域名主机管理软件，主要在用户管理、财务管理、域名接口、服务器管理面板接口等方面设计的非常人性化。<span class="wp_keywordlink_affiliate">WHMCS</span>是一套全面支持域名注册管理解析，主机开通管理，VPS开通管理和服务器管理的一站式管理软件，目前已经被越来越多的中国IDC使用。</p>-->
                     <!--<p>本商品是WHMCS v6.3.1 完全解码版，来源于国外某论坛，<span style="color: #ff0000;">本站未测试是否可正常运行！</span>请自行斟酌！</p>-->
+                </div>
+
+                <!-- 模态框（Modal） -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">确认操作</h4>
+                            </div>
+                            <div class="modal-body"><span th:text="'你正在兑换“'+${goods.title}+'”，请确认操作。'">你正在兑换“北大青鸟s2易买网EasyBuy项目源代码”，请确认操作。</span>
+                                <br>
+                                <br>
+                                <div class="small text-danger" th:text="'需要花费 '+${goods.creditprice}+' 积分'">需要花费 20 积分</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-danger">确认兑换</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
                 </div>
             </div>
         </div>

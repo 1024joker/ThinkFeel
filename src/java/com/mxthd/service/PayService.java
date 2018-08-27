@@ -29,7 +29,7 @@ public class PayService {
         parameters.put("total_fee",pay.getMoney().toString());//金额
         parameters.put("subject","[ThinkFeel]会员ID["+pay.getUid()+"]充值"+pay.getMoney()+"积分");//订单标题
         parameters.put("body","会员ID["+pay.getUid()+"]充值"+pay.getMoney()+"积分，积分充值不支持退款!");//订单m描述
-        parameters.put("show_url","http://localhost:8080");//商品展示页
+        parameters.put("show_url","http://gundaoao.eicp.net/pay");//商品展示页
         parameters.put("sign",eapayUtils.signMd5(parameters));//商户签名
         String json = HttpUtils.sendPost("https://api.eapay.cc/v1/order/add", parameters);
         return json;

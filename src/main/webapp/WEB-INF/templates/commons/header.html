@@ -43,7 +43,7 @@
                         <p class="navbar-text"><a href="/" th:href="@{/}">首页</a></p>
                     </li>
                     <li>
-                        <p class="navbar-text"><a href="/member/${sessionScope.username}" th:text="${session.login_user.username}">Demo</a></p>
+                        <p class="navbar-text"><a href="/member/${sessionScope.username}" th:href="'/member/'+${session.login_user.username}" th:text="${session.login_user.username}">Demo</a></p>
                     </li>
                     <li>
                         <p class="navbar-text"><a href="/settings" th:href="@{/user/settings}">设置</a></p>

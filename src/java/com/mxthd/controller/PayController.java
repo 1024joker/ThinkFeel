@@ -48,10 +48,10 @@ public class PayController {
             json = JSONObject.parseObject(result);
             System.out.println("====================="+json);
         }catch (Exception e){
+
         }
         if(json==null||json.getBoolean("status")==null||!json.getBoolean("status")){
-            modelAndView.setViewName("forward:/pay");
-            modelAndView.addObject("msg","订单创建失败,请稍后重试！");
+            modelAndView.setViewName("redirect:/pay?msg=%e8%ae%a2%e5%8d%95%e5%88%9b%e5%bb%ba%e5%a4%b1%e8%b4%a5%2c%e8%af%b7%e7%a8%8d%e5%90%8e%e9%87%8d%e8%af%95%ef%bc%81");
             return modelAndView;
         }
         String no = json.getJSONObject("data").getString("no");

@@ -13,9 +13,10 @@ public class User implements Serializable {
     private String email;//邮箱
     private Date createTime;//注册日期
     private Date updateTime;//最后登陆日期
-    private Integer credit;//积分
+    private Double credit;//积分
     private String avatar;//头像URL
     private Integer type;//用户类型 0为普通用户
+    private String qqopenid;
 
     @Override
     public String toString() {
@@ -29,7 +30,16 @@ public class User implements Serializable {
                 ", credit=" + credit +
                 ", avatar='" + avatar + '\'' +
                 ", type=" + type +
+                ", qqopenid='" + qqopenid + '\'' +
                 '}';
+    }
+
+    public String getQqopenid() {
+        return qqopenid;
+    }
+
+    public void setQqopenid(String qqopenid) {
+        this.qqopenid = qqopenid;
     }
 
     public Integer getId() {
@@ -80,11 +90,11 @@ public class User implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Integer getCredit() {
+    public Double getCredit() {
         return credit;
     }
 
-    public void setCredit(Integer credit) {
+    public void setCredit(Double credit) {
         this.credit = credit;
     }
 

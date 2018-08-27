@@ -5,6 +5,10 @@ import com.mxthd.bean.User;
 import com.mxthd.service.MailService;
 import com.mxthd.service.UserService;
 import com.mxthd.util.*;
+import com.qq.connect.QQConnectException;
+import com.qq.connect.api.OpenID;
+import com.qq.connect.javabeans.AccessToken;
+import com.qq.connect.oauth.Oauth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,47 @@ public class ApiController {
     MailService mailService;
     @Autowired
     UserService userService;
+
+    @RequestMapping("/qq/afterlogin")
+    @ResponseBody()
+    public ModelAndView qqafterlogin(HttpServletRequest request){
+        User login_user = (User)request.getSession().getAttribute("login_user");
+        String accessToken = null,
+                openId  = null;
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
+            if(!accessTokenObj.getAccessToken().equals("")){
+                accessToken = accessTokenObj.getAccessToken();
+                //获取Openid
+                OpenID openIDObj = new OpenID(accessToken);
+                openId = openIDObj.getUserOpenID();
+                if(login_user!=null){
+                    //用户绑定
+                    //数据库是否存在这个openid
+                    userService.updateQQOpenid(login_user.getId(),openId);
+                    modelAndView.setViewName("redirect:/user/settings");
+                }else{
+                    //用户登陆
+                }
+            }else {
+                modelAndView.setViewName("/");
+            }
+        } catch (QQConnectException e) {
+            e.printStackTrace();
+        }
+        return modelAndView;
+    }
+    @RequestMapping("/qqlogin")
+    public ModelAndView qqlogin(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            modelAndView.setViewName("redirect:"+new Oauth().getAuthorizeURL(request));
+        } catch (Exception e) {
+            modelAndView.setViewName("/");
+        }
+        return modelAndView;
+    }
 
     /**
      *  发送注册邮件

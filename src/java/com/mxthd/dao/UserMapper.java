@@ -16,7 +16,8 @@ public interface UserMapper {
     User loginCheck(String username,String password);
     //按id查询
     User findById(Integer id);
-
+    //用户绑定qq账号
+    void updateQQOpenid(@Param("id") Integer id,@Param("qqopenid") String qqopenid);
     //在后台查询所有用户的信息
     //
     List<User> findAllUser(User user);

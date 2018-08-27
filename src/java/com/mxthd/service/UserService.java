@@ -60,4 +60,10 @@ public class UserService {
     public List<User> findAllUser(User users){
         return userMapper.findAllUser(users);
     }
+    /**
+     * 用户绑定qqw
+     */
+    public  void updateQQOpenid(Integer id,String qqOpenid){
+        userMapper.updateQQOpenid(id,qqOpenid);
+    }
 }

@@ -22,5 +22,12 @@
     <select id="findAllUser" resultType="com.mxthd.bean.User">
         select *  from user where 1=1
     </select>
+    <!--添加积分-->
+    <update id="Addcredit">
+        update user set credit=credit+#{credit} where id =#{id}
+    </update>
+    <update id="updateQQOpenid">
+        update user set qqopenid=#{qqopenid} where id=#{id}
+    </update>
 
 </mapper>

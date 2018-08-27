@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${siteName}">注册</title>
-    <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
     <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
     <script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" ></script>
     <style>
@@ -45,6 +45,14 @@
             color: #8A8A8A;
             cursor: pointer;
         }
+        #myCarousel img{
+            height: 200px;
+            width: 100%;
+        }
+        #lunbohang{
+            height: 20px;
+            background-color: #f0f2f5;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +91,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+    <div id="lunbohang"></div>
     <div class="panel-heading" style="background-color: white">
        最新主题
     </div>

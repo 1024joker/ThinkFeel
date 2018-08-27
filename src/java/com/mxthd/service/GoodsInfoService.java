@@ -46,4 +46,7 @@ public class GoodsInfoService {
     public void click(Integer id){
         goodsInfoMapper.click(id);
     }
+    public Integer addGoods(Goods goods) {
+        return goodsInfoMapper.addGoods(goods);
+    }
 }

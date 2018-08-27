@@ -15,4 +15,6 @@ public interface GoodsInfoMapper {
     public Goods getById(Integer id);
     //访问
     public void click(Integer id);
+    //    增加一个商品
+    public Integer addGoods(Goods goods);
 }
