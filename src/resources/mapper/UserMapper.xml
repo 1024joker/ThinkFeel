@@ -40,12 +40,6 @@
     </if>
     </select>
 
-    <!--按照用户来查询积分的操作的信息-->
-<!--   public User selectByPay(@Param("id") Integer id);-->
-    <select id="selectByPay" resultType="com.mxthd.bean.User">
-       select u.id ,p.uid,p.ppid,p.money ,p.create_time,p.`status`
-        from user u INNER JOIN pay p
-          on u.id=p.uid where u.id=#{id}
-    </select>
+  
 
 </mapper>

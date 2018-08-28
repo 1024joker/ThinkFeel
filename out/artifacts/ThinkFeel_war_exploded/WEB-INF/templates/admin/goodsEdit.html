@@ -289,7 +289,6 @@
                     type: "POST",
                     data: $("#tab_content form").serialize(),
                     success: function (result) {
-                        alert("修改成功");
                         var pn = $("#pageNum").val();
                         window.location.href = "/ht/goods?pn=" + pn;
                     }
