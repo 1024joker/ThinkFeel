@@ -21,5 +21,9 @@ public interface UserMapper {
     //在后台查询所有用户的信息
     //
     List<User> findAllUser(User user);
+
     int Addcredit(@Param("id") Integer id,@Param("credit") Double credit);
+
+    //在后台根据姓名来模糊查询
+    public List<User> getUsername(@Param("username") String username);
 }

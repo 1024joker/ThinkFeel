@@ -36,7 +36,7 @@
             <div style="padding-top: 40px;padding-left: 30px" class="col-md-12" id="tab_content">
                 <!--搜索商品标题框-->
                 <form class="form-inline">
-                    <input type="text" id="usersname" class="form-control" style="width: 200px" placeholder="用户姓名搜索"/>
+                    <input type="text" id="Username" class="form-control" style="width: 200px" placeholder="用户姓名搜索"/>
                     <button type="button" class="btn btn-default glyphicon glyphicon-search" id="search" style="font-weight: bold">搜索</button>
                 </form>
                 <!--显示用户-->
@@ -63,13 +63,37 @@
         <!-- 显示用户分页信息 -->
         <div class="row"  style="margin-top: 500px; padding-left:360px">
             <!--分页文字信息  -->
-            <div class="col-md-4" id="page_info_area"  style="padding-top:30px ;"></div>
+            <div class="col-md-4" id="page_info_area" style="padding-top:50px ;"></div>
             <!-- 分页条信息 -->
-            <div class="col-md-5 " id="page_nav_area"></div>
+            <div class="col-md-5 " id="page_nav_area" style="padding-top:30px ;"></div>
+
 
         </div>
     </div>
-<script type="text/javascript">
+
+
+
+
+
+    <script type="text/javascript">
+    //时间的转换
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
@@ -101,18 +125,19 @@
     };
     //解析用户信息
     function build_users_table(result) {
+        $("#users_table tbody").empty();
         var users=result.data.list;
         //遍历输出
         $.each(users,function (index,item) {
             var usersId = $("<td></td>").append(item.id);//用户编号
             var usersname=$("<td></td>").append(item.username);//用户姓名
             var usersEmail=$("<td></td>").append(item.email);//用户邮箱
-            var usersCreateTime=$("<td></td>").append(item.createTime);//用户注册时间
-            var usersUpdateTime=$("<td></td>").append(item.updateTime);//用户最后登录的时间
+            var usersCreateTime=$("<td></td>").append((new Date(item.createTime)).Format("yyyy-MM-dd hh:mm:ss"));//用户注册时间
+            var usersUpdateTime=$("<td></td>").append((new Date(item.updateTime)).Format("yyyy-MM-dd hh:mm:ss"));//用户最后登录的时间
             var userCredit=$("<td></td>").append(item.credit);//用户积分
             //编辑按钮
-            var editBtn = $("<button></button>").addClass("layui-btn layui-btn-sm layui-btn-radius layui-btn-danger")
-                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+            var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("删除");
             editBtn.attr("edit_id",item.id);
             var btnTd = $("<span></span>").append(editBtn)
             //append方法执行完成以后还是返回原来的元素
@@ -154,7 +179,7 @@
             prepageli.addClass("disabled");
         } else {
             //判断是不是按条件跳页
-
+            if(result.message == "pageInfo") {
                 //点击跳首页
                 firstpageli.click(function () {
                     to_page(1);
@@ -162,7 +187,15 @@
                 prepageli.click(function () {
                     to_page(result.data.pageNum - 1);
                 });
-
+            }else if(result.message == "pageByUsername"){
+                //点击跳首页
+                firstpageli.click(function () {
+                    to_page(1);
+                });
+                prepageli.click(function () {
+                    to_page(result.data.pageNum - 1);
+                });
+            }
         }
         var nextpageli = $("<li></li>").append($("<a></a>").append("&raquo;"));
         var lastpageli = $("<li></li>").append($("<a></a>").append("末页"));
@@ -171,12 +204,21 @@
             lastpageli.addClass("disabled");
         } else {
 
+            if(result.message == "pageByUsername") {
                 nextpageli.click(function () {
                     to_page(result.data.pageNum + 1);
                 });
                 lastpageli.click(function () {
                     to_page(result.data.pages);
                 });
+            }else if(result.message == "pageByUsername"){
+                nextpageli.click(function () {
+                    title_page(result.data.pageNum + 1);
+                });
+                lastpageli.click(function () {
+                    title_page(result.data.pages);
+                });
+            }
 
         }
         ul.append(firstpageli).append(prepageli);//追加首页标签和上一页标签
@@ -188,14 +230,15 @@
                 numli.addClass("active");
             }
             //点击需要跳转的具体页面
-
+            if(result.message == "pageInfo"){
                 numli.click(function () {
                     to_page(item);
                 });
-
+            }else if(result.message == "pageByUsername"){
                 numli.click(function () {
                     title_page(item);
                 });
+            }
 
             ul.append(numli);
         });
@@ -203,6 +246,44 @@
         // /*把ul加入到nav元素中*/
         var nav = $("<nav></nav>").append(ul).appendTo("#page_nav_area");
     }
+
+
+    //按照姓名来查询
+    /*click搜索事件*/
+    $("#search").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/admin/getUsername",
+            data: {username: $("#Username").val(), pn: "1"},
+            success: function (result) {
+                console.log(result);
+                //解析并显示用户信息
+                build_users_table(result);
+                //显示分页条数
+                build_page_info(result);
+                //显示分页导航数据
+                build_page_nav(result);
+            }
+        });
+    });
+    /*搜索条件之后的分页查询函数*/
+    function title_page(pn) {
+        $.ajax({
+            type: "GET",
+            url: "/admin/getUsername",
+            data: {username: $("#Username").val(), pn: pn},
+            success: function (result) {
+                console.log(result);
+                //解析并显示用户信息
+                build_users_table(result);
+                //显示分页条数
+                build_page_info(result);
+                //显示分页导航数据
+                build_page_nav(result);
+            }
+        });
+    }
+
 
 
 </script>

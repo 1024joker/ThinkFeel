@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.mxthd.bean.User;
 import com.mxthd.service.UserService;
 import com.mxthd.util.JsonResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,28 @@ public class UserAdminController {
         JsonResult json = new JsonResult(0,"pageInfo",pageInfo);
         return json;
     }
+
+    /*
+     * 根据姓名查询带条件的商品信息
+     * */
+    @RequestMapping("/admin/getUsername")
+    @ResponseBody
+    public JsonResult getUsername(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
+                                      @RequestParam("username") String username){
+        PageHelper.startPage(pn,10);
+        List<User> users1 = userService.getUsername(username);
+        System.out.println(username);
+        PageInfo pageInfo = new PageInfo(users1,5);
+        JsonResult json = new JsonResult(0,"pageByUsername",pageInfo);
+        return json;
+    }
+
     @RequestMapping("/ht/users")
     public String togoodsInfo(){
         return "admin/userInfo";
     }
+
+
+
+
 }
