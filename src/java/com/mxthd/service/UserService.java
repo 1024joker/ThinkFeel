@@ -71,4 +71,7 @@ public class UserService {
      * 在后台按姓名模糊查询*/
     public List<User> getUsername(String username){ return userMapper.getUsername(username); }
 
+    /*在后台用户的消费情况*/
+    public List<User> selectByPay(Integer id){ return  userMapper.selectByPay(id);}
+
 }

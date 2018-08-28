@@ -125,7 +125,7 @@
             © ThinkFeel后台管理系统
         </div>
     </div>
-    <input hidden="hidden" th:value="${pn_n}" id="pn_n">
+   <!-- <input hidden="hidden" th:value="${pn_n}" id="pn_n">-->
 <script type="text/javascript">
     //JavaScript代码区域
     layui.use('element', function(){
@@ -155,8 +155,7 @@
         });
     };
     //1.解析并显示原员工
-    function
-    // build_goods_table(result) {
+    function build_goods_table(result) {
         $("#goods_table tbody").empty();
         var goods = result.data.list;
         /*使用jQuery遍历*/
@@ -189,7 +188,7 @@
                     .append(goodsExCount).append(goodsRepeat).append(goodsPublish).append(btn)
                     .addClass("active").appendTo("#goods_table tbody");
             }
-        });
+        })
     }
 
     // 2.显示分页条数

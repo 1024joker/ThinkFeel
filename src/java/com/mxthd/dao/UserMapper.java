@@ -26,4 +26,7 @@ public interface UserMapper {
 
     //在后台根据姓名来模糊查询
     public List<User> getUsername(@Param("username") String username);
+
+    //后台根据用户的id来进行查询用户的积分信息
+    public List<User> selectByPay(@Param("id") Integer id);
 }

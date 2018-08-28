@@ -66,14 +66,101 @@
             <div class="col-md-4" id="page_info_area" style="padding-top:50px ;"></div>
             <!-- 分页条信息 -->
             <div class="col-md-5 " id="page_nav_area" style="padding-top:30px ;"></div>
-
-
         </div>
     </div>
 
 
 
+    <!-- 员工显示积分的的模态框 -->
+    <div class="modal fade in" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width: 1080px; height: 1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">员工积分的情况</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="layui-tab layui-tab-card" style="height: 400px;">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this" >支付</li>
+                        <li>未支付</li>
+                    </ul>
+                    <div class="layui-tab-content" style="height: 100px;">
+                        <div class="layui-tab-item layui-show" >
+                            <table class="layui-table" id="pay_table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>积分编号</th>
+                                    <th>订单编号</th>
+                                    <th>金额</th>
+                                    <th>消费时间</th>
+                                    <th>支付</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                     <!--显示每个用户的消费记录-->
+                                </tbody>
+                            </table>
+                            <!-- 显示用户分页信息 -->
+                             <div class="row"  >
+                                <!--分页文字信息  -->
+                                <div class="col-md-4" id="page_info_areas" style="padding-top:50px ;"></div>
+                                <!-- 分页条信息 -->
+                                <div class="col-md-5 " id="page_nav_areas" style="padding-top:30px ;"></div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>积分编号</th>
+                                    <th>订单编号</th>
+                                    <th>金额</th>
+                                    <th>消费时间</th>
+                                    <th>支付</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>贤心</td>
+                                    <td>2016-11-29</td>
+                                    <td>人生就像是一场修行</td>
+                                    <td>人生就像是一场修行</td>
+                                    <td>人生就像是一场修行</td>
+                                </tr>
+                                <tr>
+                                    <td>许闲心</td>
+                                    <td>2016-11-28</td>
+                                    <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+                                    <td>人生就像是一场修行</td>
+                                    <td>人生就像是一场修行</td>
 
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="emp_save_btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
     //时间的转换
@@ -137,7 +224,7 @@
             var userCredit=$("<td></td>").append(item.credit);//用户积分
             //编辑按钮
             var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
-                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("删除");
+                .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("查看");
             editBtn.attr("edit_id",item.id);
             var btnTd = $("<span></span>").append(editBtn)
             //append方法执行完成以后还是返回原来的元素
@@ -285,7 +372,61 @@
     }
 
 
+    //绑定模态框
+    $(document).on("click",".edit_btn",function(){
+       //获取用户的id值
+        var userName = $(this).parents("tr").find("td:eq(1)").text();
+        var userId = $(this).attr("edit_id");
+        //解析用户的消费信息
+         //pay_page(pn);
+        //打开模态框
+        $("#empAddModal").modal({
+            backdrop:"static"
+        });
+    });
+    function pay_page(pn){
+        $.ajax({
+            url:"/admin/selectByPay",
+            data:"pn="+pn,
+            type:"GET",
+            success:function(result){
+                console.log(result);
+                //解析并显示用户信息
+                build_pay_table(result);
+                //2、解析并显示分页信息
+                build_page_info(result)
+                //3、解析显示分页条数据
+                build_page_nav(result);
+            }
+        });
+    };
 
-</script>
+
+    //解析用户信息
+    function build_pay_table(result) {
+        $("#pay_table tbody").empty();
+        var pays=result.data.list;
+        //遍历输出
+        $.each(pays,function (index,item) {
+            var pid = $("<td></td>").append(item.pay.id);//积分的编号
+            var ppid=$("<td></td>").append(item.pay.ppid);//消费的编号
+            var money=$("<td></td>").append(item.pay.money);//用户所使用的金额
+            var pay_create_time=$("<td></td>").append((new Date(item.pay.create_time)).Format("yyyy-MM-dd hh:mm:ss"));//用户消费的时间
+            var status=$("<td></td>").append(item.pay.status);//用户积分
+            //append方法执行完成以后还是返回原来的元素
+            $("<tr></tr>")
+                .append(pid)
+                .append(ppid)
+                .append(money)
+                .append(pay_create_time)
+                .append(status)
+                .addClass("active")
+                .appendTo("#pay_table tbody")
+
+        })
+    }
+
+
+    </script>
 </body>
 </html>
