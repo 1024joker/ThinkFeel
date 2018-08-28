@@ -17,7 +17,16 @@ public class GoodsHtmlController {
 
     /*编辑商品信息*/
     @RequestMapping("/editGoods")
-        public String GoodsEdit () {
-            return "admin/goodsEdit";
+    public ModelAndView GoodsEdit (@RequestParam(value = "editId") Integer editId
+            ,@RequestParam(value = "pageNum") Integer pageNum) {
+        ModelAndView modelAndView = new ModelAndView("admin/goodsEdit");
+        modelAndView.addObject("editId", editId);
+        modelAndView.addObject("pageNum", pageNum);
+        return modelAndView;
+    }
+    /*添加商品信息跳转 页面*/
+    @RequestMapping("/addGoods")
+    public String addGoods(){
+        return "admin/goodsEdit";
     }
 }

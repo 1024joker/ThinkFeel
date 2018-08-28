@@ -25,61 +25,83 @@ public class GoodsInfoController {
     GoodsClassService goodsClassService;
     @Autowired
     GoodsInfoService goodsInfoService;
+
     /*
-    * 查询所有商品信息
-    * */
+     * 查询所有商品信息
+     * */
     @RequestMapping("/goods")
     @ResponseBody
-    public JsonResult getAllGoods(@RequestParam(value = "pn", defaultValue = "1")Integer pn){
+    public JsonResult getAllGoods(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //引入分页插件
-        PageHelper.startPage(pn,10);//从第一页开始，每页显示5条数据
+        PageHelper.startPage(pn, 10);//从第一页开始，每页显示5条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
         List<Goods> goods = goodsInfoService.getGoodsInfo(null);
         //导航页码数5页
-        PageInfo pageInfo = new PageInfo(goods,5);
+        PageInfo pageInfo = new PageInfo(goods, 5);
         //返回json数据
-        JsonResult json = new JsonResult(0,"pageInfo",pageInfo);
+        JsonResult json = new JsonResult(0, "pageInfo", pageInfo);
         return json;
     }
+
     /*
      * 根据标题查询带条件的商品信息
      * */
     @RequestMapping("/getGoodsByTitle")
     @ResponseBody
-    public JsonResult getGoodsByTitle(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
-                                      @Param("title") String title){
-        PageHelper.startPage(pn,10);
+    public JsonResult getGoodsByTitle(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+                                      @Param("title") String title) {
+        PageHelper.startPage(pn, 10);
         List<Goods> goods1 = goodsInfoService.getGoodsByTitle(title);
-        PageInfo pageInfo = new PageInfo(goods1,5);
-        JsonResult json = new JsonResult(0,"pagesByTitle",pageInfo);
+        PageInfo pageInfo = new PageInfo(goods1, 5);
+        JsonResult json = new JsonResult(0, "pagesByTitle", pageInfo);
         return json;
     }
+
     /*
-    * 加载编辑商品信息页面时，返回商品类型数据给下拉框
-    * */
+     * 加载编辑商品信息页面时，返回商品类型数据给下拉框
+     * */
     @RequestMapping("/getGoodsType")
     @ResponseBody
-    public JsonResult getGoodsType(){
+    public JsonResult getGoodsType() {
         List<GoodsClass> goodsClasses = goodsClassService.getAll();
-        JsonResult json = new JsonResult(0,"goodsClass",goodsClasses);
+        JsonResult json = new JsonResult(0, "goodsClass", goodsClasses);
         return json;
     }
+
     /*
-    * 新增商品
-    * */
-    @RequestMapping(value = "/addGoods",method = RequestMethod.POST)
+     * 新增商品
+     * */
+    @RequestMapping(value = "/addGoods")
     @ResponseBody
-    public JsonResult addGoods(Goods goods){
+    public JsonResult addGoods(Goods goods) {
         int i = goodsInfoService.addGoods(goods);
-        if (i>0) {
-            PageHelper.startPage(1,10);
+        if (i > 0) {
+            PageHelper.startPage(1, 10);
             List<Goods> goods1 = goodsInfoService.getGoodsInfo(null);
             //导航页码数5页
-            PageInfo pageInfo = new PageInfo(goods1,5);
+            PageInfo pageInfo = new PageInfo(goods1, 5);
             //返回json数据
-            JsonResult json = new JsonResult(0,"lastpage",pageInfo.getPages());
+            JsonResult json = new JsonResult(0, "lastpage", pageInfo.getPages());
             return json;
         }
         return new JsonResult("失败");
     }
+
+    @RequestMapping("/editGoods")
+    @ResponseBody
+    /*根据商品id 查询商品，并赋值到编辑页面*/
+    public JsonResult editGoods(Goods goods,@RequestParam(value = "editId") Integer editId) {
+        Goods goodsList = goodsInfoService.getById(editId);
+        JsonResult jsonResult = new JsonResult(0,"editGoodsInfo",goodsList);
+        return jsonResult;
+    }
+
+    /*根据商品id 修改商品信息*/
+    @RequestMapping("/updateGoods")
+    @ResponseBody
+    public Integer updateGoods(Goods goods,@RequestParam(value = "editId") Integer editId){
+        int i = goodsInfoService.updateById(goods,editId);
+        return i;
+    }
 }
+

@@ -44,9 +44,18 @@ public class GoodsInfoService {
      * @param id
      */
     public void click(Integer id){
+
         goodsInfoMapper.click(id);
     }
+
+    /*增加一个商品*/
     public Integer addGoods(Goods goods) {
+
         return goodsInfoMapper.addGoods(goods);
+    }
+
+    /*根据id修改商品信息*/
+    public Integer updateById(Goods goods,Integer editId) {
+        return goodsInfoMapper.updateGoods(goods,editId);
     }
 }

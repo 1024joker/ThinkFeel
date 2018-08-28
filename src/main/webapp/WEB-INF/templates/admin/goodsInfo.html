@@ -20,63 +20,6 @@
     <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body class="layui-layout-body">
-    <!--建立编辑信息模态框-->
-    <!--<div id="goodsUpdateModal" class="modal fade" tabindex="-1" role="dialog">-->
-        <!--<div class="modal-dialog" role="document">-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                    <!--<h4 class="modal-title">编辑商品信息</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<form class="form-horizontal">-->
-                        <!--<div class="form-group">-->
-                            <!--<label for="input_goods_title" class="col-sm-2 control-label">商品标题</label>-->
-                            <!--<div class="col-sm-7">-->
-                                <!--<input type="email" class="form-control" id="input_goods_title" placeholder="商品标题">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">商品类型</label>-->
-                            <!--<div class="col-sm-6">-->
-                                <!--<select class="form-control" name="gId" id="select_goods_type">-->
-                                    <!--&lt;!&ndash;商品信息下拉框&ndash;&gt;-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label for="input_goods_credit" class="col-sm-2 control-label">兑换商品所需积分</label>-->
-                            <!--<div class="col-sm-5">-->
-                                <!--<input type="email" class="form-control" id="input_goods_credit" placeholder="商品所需积分">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label for="input_goods_stock" class="col-sm-2 control-label">库存</label>-->
-                            <!--<div class="col-sm-5">-->
-                                <!--<input type="email" class="form-control" id="input_goods_stock" placeholder="商品库存">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">能否重复兑换</label>-->
-                            <!--<div class="col-sm-10">-->
-                                <!--<label class="radio-inline">-->
-                                    <!--<input type="radio" name="gender" id="input_goods_repeat1" value="0" checked="checked"> 不能重复兑换-->
-                                <!--</label>-->
-                                <!--<label class="radio-inline">-->
-                                    <!--<input type="radio" name="gender" id="input_goods_repeat2" value="1"> 能重复兑换-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>-->
-                    <!--<button type="button" class="btn btn-primary">保存更改</button>-->
-                <!--</div>-->
-            <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
-        <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-    <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
-    <!--建立删除商品模态框-->
     <div class="layui-layout layui-layout-admin">
         <!--加载头部区域-->
         <div th:replace="admin/common/top :: top"></div>
@@ -138,6 +81,7 @@
         $("#goods_manage").addClass("layui-nav-itemed");
         to_page($("#pn_n").val());
     });
+
     //ajax加载数据信息
     function to_page(pn){
         $.ajax({
@@ -145,6 +89,12 @@
             data:"pn="+pn,
             type:"GET",
             success:function(result){
+                console.log(result)
+                if(pn>result.data.pages){
+                    to_page(result.data.pages);
+                }else if(pn<result.data.firstPage){
+                    to_page(1);
+                }
                 //解析并显示商品信息
                 build_goods_table(result);
                 //显示分页条数
@@ -178,6 +128,8 @@
             var btn = $("<span></span>").append(editBtn).append("<span> </span>").append(delBtn);
             /*将员工id存放到编辑按钮里面，点击的时候，将id值传进另一个页面*/
             editBtn.attr("edit_id",item.id);
+            /*将当前员工页码数存进按钮进行传值，在修改完成之后 返回当前页码*/
+            editBtn.attr("edit_pg",result.data.pageNum);
             //将td标签添加进一个tr
             if(item.post == 1) {
                 $("<tr></tr>").append(goodsId).append(goodsType).append(goodsTitle).append(goodsCredit).append(goodsStock)
@@ -284,7 +236,6 @@
             url: "/admin/getGoodsByTitle",
             data: {title: $("#title").val(), pn: "1"},
             success: function (result) {
-                console.log(result);
                 //解析并显示商品信息
                 build_goods_table(result);
                 //显示分页条数
@@ -301,7 +252,6 @@
             url: "/admin/getGoodsByTitle",
             data: {title: $("#title").val(), pn: pn},
             success: function (result) {
-                console.log(result);
                 //解析并显示商品信息
                 build_goods_table(result);
                 //显示分页条数
@@ -312,6 +262,12 @@
         });
     }
 
+    /*编辑按钮的 点击事件*/
+    $(document).on("click",".edit_btn",function () {
+        var editId = $(this).attr("edit_id");        //商品id
+        var pageNum = $(this).attr("edit_pg");      //商品当前页码
+        window.location.href = "/ht/editGoods?editId="+editId+"&pageNum="+pageNum;
+    });
 
 
 </script>
