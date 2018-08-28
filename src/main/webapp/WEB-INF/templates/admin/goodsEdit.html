@@ -32,7 +32,7 @@
     <!--商品信息主体区域-->
     <div class="layui-body" id="tab_body">
         <div style="padding-top: 30px;padding-left: 80px" class="col-md-12" id="tab_content">
-            <form class="layui-form layui-form-pane" id="goodsFrom">
+            <form class="layui-form layui-form-pane" id="goodsFrom" lay-filter="formTest">
                 <fieldset class="layui-elem-field layui-field-title" id="goods_edit_form" style="margin-top: 30px;">
                     <legend>商品新增与修改</legend>
                 </fieldset>
@@ -51,8 +51,8 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类型</label>
-                    <div class="layui-input-block">
-                        <select id="goods_type_select" lay-verify="goodsType" name="goodsclassId">
+                    <div class="layui-input-block" id="goods_type">
+                        <select id="goods_type_select" lay-verify="goodsType" name="goodsclassId" lay-filter="gt">
                         </select>
                     </div>
                 </div>
@@ -82,15 +82,15 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">重复兑换</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-block" id="exchange">
                         <input type="radio" name="type" value="0" title="不能重复兑换" checked>
                         <input type="radio" name="type" value="1" title="可以重复兑换">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">是否上架</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="post" value="0" title="上架" checked>
+                    <div class="layui-input-block" id="post">
+                        <input type="radio" name="post" value="0" title="上架" th:checked="checked">
                         <input type="radio" name="post" value="1" title="未上架">
                     </div>
                 </div>
@@ -103,9 +103,13 @@
                         </div>
                     </div>
                 </div>
+                <input hidden="hidden" th:value="${editId}" id="editId" name="id">
+                <input hidden="hidden" th:value="${pageNum}" id="pageNum">
                 <div class="layui-form-item">
                     <div class="layui-input-inline">
-                        <button class="layui-btn" lay-submit lay-filter="demo1" id="submit" type="submit">立即提交</button>
+                        <button class="layui-btn" lay-submit lay-filter="demo1" id="submit" type="submit"
+                                th:value="${editId}">立即提交
+                        </button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                     </div>
                 </div>
@@ -143,12 +147,16 @@
             var form = layui.form
                 , layer = layui.layer
             form.render('select');
-
             //自定义验证规则
             form.verify({
                 goodsTitle: function (value, item) {
-                    if (value.length < 4) {
+                    if (value.length < 4 ) {
                         return "内容请输入至少4个字符";
+                    }
+                },
+                goodsTitle: function (value, item) {
+                    if (value.trim()=='') {
+                        return "内容不能为空";
                     }
                 },
                 goodsType: function (value, item) {
@@ -158,13 +166,27 @@
                 }
             });
             //监听提交
-            form.on('submit(demo1)', function(data){
-                layer.msg(JSON.stringify("商品添加成功"),{
-                    title:'商品添加状态'
-                });
+            form.on('submit(demo1)', function (data) {
+                if ($("#submit").val() > 0) {
+                    layer.msg(JSON.stringify("商品修改成功"), {
+                        title: '商品修改状态'
+                    });
+                } else {
+                    layer.msg(JSON.stringify("商品添加成功"), {
+                        title: '商品添加状态'
+                    });
+                }
                 setTimeout(200000);
                 return false;
             });
+        });
+    }
+
+    /*更新回显信息*/
+    function refresh() {
+        layui.use('form', function () {
+            var form = layui.jquery, form = layui.form;
+            form.render();
         });
     }
 </script>
@@ -173,12 +195,13 @@
     /*下拉框的函数*/
     function getGoodsType(ele) {
         /*清空下拉框的选项*/
-        $(ele).empty();
+        // $(ele).empty();
         $.ajax({
             url: "/admin/getGoodsType",
             data: "GET",
             success: function (result) {
-                var optionBsic = $("<option></option>").append("请选择商品类型").attr("value", "");
+                /*动态添加下拉框列表*/
+                var optionBsic = $("<option></option>").append("请选择").attr("class", "layui-select-tips");
                 optionBsic.appendTo(ele);
                 $.each(result.data, function (index) {
                     var optionEle = $("<option></option>").append(result.data[index].name).attr("value", result.data[index].id);
@@ -188,42 +211,103 @@
             }
         });
     };
+
+    /*页面加载的时候 渲染表单*/
+    $(function () {
+        getGoodsType("#goods_type_select");//加载select下拉框
+        $("#goods_edit").addClass("layui-bg-green");//改变left导航的背景样式
+        $("#goods_manage").addClass("layui-nav-itemed");//选中left导航的指定tag
+    })
+
+    /*页面加载时有editId的话 加载数据*/
+    if ($("#editId").val() > 0) {
+        $(document).ready(function () {
+            var editId = $("#editId").val();
+            $.ajax({
+                url: "/admin/editGoods",
+                data: {editId: editId},
+                type: "GET",
+                success: function (result) {
+                    /*给form表单回显*/
+                    var info = result.data;
+                    $("#goods_title_input").val(info.title);
+                    $("#goods_price_input").val(info.marketprice);
+                    $("#goods_credit_input").val(info.creditprice);
+                    $("#goods_stock_input").val(info.stock);
+                    $("#exchange input[name=type]").val([info.type]);
+                    $("#post input[name=post]").val([info.post]);
+                    $("#goods_type select").val([info.goodsclassId]);
+                    refresh();//更新商品，不然看不见效果
+                    edit(info.content);//文本编辑器 赋值
+                }
+            });
+        });
+    } else {
+        $(document).ready(function () {
+            edit();
+        })
+    }
+
     /*当页面加载完之后 加载*/
     var testEditor;
-    $(function () {
+
+    function edit(content) {
         testEditor = editormd("test-editormd", {
+            htmlDecode: "style,script,iframe",
             width: "100%",
             height: 640,
+            markdown: content,
             syncScrolling: "single",
             path: "/editormd/lib/",
             saveHTMLToTextarea: true,
             emoji: true,//emoji表情，默认关闭
+            taskList: true,
+            tex: true, // 默认不解析
+            flowChart: true, // 默认不解析
+            sequenceDiagram: true, // 默认不解析
+            codeFold: true,
             /**上传图片相关配置如下*/
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
             imageUploadURL: "/api/upload/editormdPic",//注意你后端的上传图片服务地址
         });
-        /*加载下拉框*/
-        getGoodsType("#goods_type_select");
         $("#test-editormd").css("height", "400px");
-        $("#goods_edit").addClass("layui-bg-green");
-        $("#goods_manage").addClass("layui-nav-itemed");
-    });
+    };
 
     /*提交表单*/
     $(document).on("click", "#submit", function () {
-        /*ajax新增商品信息*/
-        var title = $("#goods_title_input").val().length;
-        if(title >= 4) {
-            $.ajax({
-                url: "/admin/addGoods",
-                type: "POST",
-                data: $("#tab_content form").serialize(),
-                success: function (result) {
-                    var pn = result.data;
-                    window.location.href = "/ht/goods?pn=" + pn;
-                }
-            });
+        /*判断是否有editId，有的话则是修改，没有则是添加*/
+        var editId = $("#editId").val();
+        /*判断商品标题长度 是否大于=4*/
+        var title = $("#goods_title_input").val();
+        if(editId > 0){
+            /*ajax修改商品信息*/
+            // renderform();
+            if (title.length >= 4 && title.trim()!='') {
+                $.ajax({
+                    url: "/admin/updateGoods?editId="+editId,
+                    type: "POST",
+                    data: $("#tab_content form").serialize(),
+                    success: function (result) {
+                        var pn = $("#pageNum").val();
+                        window.location.href = "/ht/goods?pn=" + pn;
+                    }
+                });
+            }
+        }else {
+            /*ajax新增商品信息*/
+            if (title.length >= 4) {
+                $.ajax({
+                    url: "/admin/addGoods",
+                    type: "POST",
+                    data: $("#tab_content form").serialize(),
+                    success: function (result) {
+                        $("#goodsFrom").empty();
+                        var pn = result.data;
+                        window.location.href = "/ht/goods?pn=" + pn;
+                    }
+                });
+            }
         }
     });
 

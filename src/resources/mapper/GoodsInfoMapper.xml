@@ -50,7 +50,7 @@
             </if>
         </where>
     </select>
-    <select id="getById" resultType="com.mxthd.bean.Goods">
+    <select id="getById" resultMap="GoodInfoMap">
         select * from goods where id=#{id}
     </select>
     <update id="click">
@@ -61,4 +61,19 @@
         INSERT INTO goods(title,content,goodsclass_id,marketprice,creditprice,stock,type,post)
         VALUES (#{title},#{content},#{goodsclassId},#{marketprice},#{creditprice},#{stock},#{type},#{post})
     </insert>
+    <!--根据id 修改商品    public Integer updateGoods(Integer editId);-->
+    <update id="updateGoods">
+        update goods
+        <set>
+            content = #{goods.content},
+            title = #{goods.title},
+            goodsclass_id = #{goods.goodsclassId},
+            marketprice = #{goods.marketprice},
+            creditprice = #{goods.creditprice},
+            stock = #{goods.stock},
+            post = #{goods.post},
+            type = #{goods.type},
+        </set>
+        where id = #{editId}
+    </update>
 </mapper>

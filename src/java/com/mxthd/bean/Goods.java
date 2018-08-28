@@ -120,4 +120,23 @@ public class Goods {
     public void setPost(Integer post) {
         this.post = post;
     }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", goodsclassId=" + goodsclassId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", marketprice=" + marketprice +
+                ", creditprice=" + creditprice +
+                ", stock=" + stock +
+                ", exchangeCount=" + exchangeCount +
+                ", click=" + click +
+                ", type=" + type +
+                ", post=" + post +
+                ", goodsClass=" + goodsClass +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
 }
