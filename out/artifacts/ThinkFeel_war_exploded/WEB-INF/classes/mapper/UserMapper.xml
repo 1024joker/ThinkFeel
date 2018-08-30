@@ -29,7 +29,9 @@
     <update id="updateQQOpenid">
         update user set qqopenid=#{qqopenid} where id=#{id}
     </update>
-
+    <select id="qqlogin" resultType="com.mxthd.bean.User">
+        select * from user where qqopenid=#{qqopenid}
+    </select>
     <!--在后台按照姓名某户查询-->
     <!--public List<User> getUsername(String username);-->
     <select id="getUsername" resultType="com.mxthd.bean.User">
@@ -40,12 +42,6 @@
     </if>
     </select>
 
-    <!--按照用户来查询积分的操作的信息-->
-<!--   public User selectByPay(@Param("id") Integer id);-->
-    <select id="selectByPay" resultType="com.mxthd.bean.User">
-       select u.id ,p.uid,p.ppid,p.money ,p.create_time,p.`status`
-        from user u INNER JOIN pay p
-          on u.id=p.uid where u.id=#{id}
-    </select>
+  
 
 </mapper>

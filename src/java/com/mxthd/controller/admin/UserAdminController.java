@@ -2,7 +2,10 @@ package com.mxthd.controller.admin;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mxthd.bean.Pay;
 import com.mxthd.bean.User;
+import com.mxthd.dao.PayMapper;
+import com.mxthd.service.PayService;
 import com.mxthd.service.UserService;
 import com.mxthd.util.JsonResult;
 import org.apache.ibatis.annotations.Param;
@@ -16,13 +19,15 @@ import java.util.List;
 public class UserAdminController {
     @Autowired
     UserService userService;
+    @Autowired
+    PayService payService;
     /**
      * 后台查询所有用户的信息*/
     @RequestMapping("/admin/users")
     @ResponseBody
     public JsonResult finAllUser(@RequestParam(value = "pn", defaultValue = "1")Integer pn){
         //引入分页插件
-        PageHelper.startPage(pn,10);//从第一页开始，每页显示10条数据
+        PageHelper.startPage(pn,8);//从第一页开始，每页显示10条数据
         //startpage后面紧跟的查询这个查询就是一个分页查询
         List<User> users=userService.findAllUser(null);
         PageInfo pageInfo = new PageInfo(users,8);
@@ -38,7 +43,7 @@ public class UserAdminController {
     @ResponseBody
     public JsonResult getUsername(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
                                       @RequestParam("username") String username){
-        PageHelper.startPage(pn,10);
+        PageHelper.startPage(pn,8);
         List<User> users1 = userService.getUsername(username);
         System.out.println(username);
         PageInfo pageInfo = new PageInfo(users1,5);
@@ -51,9 +56,9 @@ public class UserAdminController {
     @ResponseBody
     public JsonResult selectByPay(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
                                   @RequestParam(value = "id")Integer id){
-        PageHelper.startPage(pn,10);
-        List<User> users = userService.selectByPay(id);
-        System.out.println(id);
+        PageHelper.startPage(pn,5);
+        List<Pay> users = payService.findByUid(id);
+      // System.out.println(id);
         PageInfo pageInfo = new PageInfo(users,5);
         JsonResult json = new JsonResult(0,"pageById",pageInfo);
         return json;

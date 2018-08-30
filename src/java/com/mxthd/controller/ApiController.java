@@ -47,9 +47,14 @@ public class ApiController {
                     modelAndView.setViewName("redirect:/user/settings");
                 }else{
                     //用户登陆
+                    User qqlogin = userService.qqlogin(openId);
+                    if(qqlogin!=null){
+                        request.getSession().setAttribute("login_user",qqlogin);
+                    }
+                    modelAndView.setViewName("redirect:/");
                 }
             }else {
-                modelAndView.setViewName("/");
+                modelAndView.setViewName("redirect:/");
             }
         } catch (QQConnectException e) {
             e.printStackTrace();
