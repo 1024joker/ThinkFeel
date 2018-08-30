@@ -23,7 +23,7 @@
     <link href="" th:href="@{/editormd/css/editormd.css}" rel="stylesheet"/>
     <script th:src="@{/editormd/editormd.min.js}"></script>
 </head>
-<body class="layui-layout-body">
+<body class="layui-layout-body" onload=document.gf.title.focus()>
 <div class="layui-layout layui-layout-admin">
     <!--加载头部区域-->
     <div th:replace="admin/common/top :: top"></div>
@@ -32,7 +32,7 @@
     <!--商品信息主体区域-->
     <div class="layui-body" id="tab_body">
         <div style="padding-top: 30px;padding-left: 80px" class="col-md-12" id="tab_content">
-            <form class="layui-form layui-form-pane" id="goodsFrom" lay-filter="formTest">
+            <form class="layui-form layui-form-pane" id="goodsFrom" lay-filter="formTest" name="gf">
                 <fieldset class="layui-elem-field layui-field-title" id="goods_edit_form" style="margin-top: 30px;">
                     <legend>商品新增与修改</legend>
                 </fieldset>
@@ -121,6 +121,7 @@
         © ThinkFeel后台管理系统
     </div>
 </div>
+
 <script type="text/javascript">
     //JavaScript代码区域
     layui.use('element', function () {
@@ -272,6 +273,7 @@
             imageUploadURL: "/api/upload/editormdPic",//注意你后端的上传图片服务地址
         });
         $("#test-editormd").css("height", "400px");
+        $("#title").focus();
     };
 
     /*提交表单*/
@@ -289,7 +291,6 @@
                     type: "POST",
                     data: $("#tab_content form").serialize(),
                     success: function (result) {
-                        alert("修改成功");
                         var pn = $("#pageNum").val();
                         window.location.href = "/ht/goods?pn=" + pn;
                     }
