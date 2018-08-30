@@ -73,5 +73,9 @@ public class UserService {
 
     /*在后台用户的消费情况*/
     public List<User> selectByPay(Integer id){ return  userMapper.selectByPay(id);}
+    //qq登陆
+    public User qqlogin(String qqopenid){
+        return userMapper.qqlogin(qqopenid);
+    }
 
 }

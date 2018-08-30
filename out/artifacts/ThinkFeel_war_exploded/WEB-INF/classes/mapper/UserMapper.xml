@@ -29,7 +29,9 @@
     <update id="updateQQOpenid">
         update user set qqopenid=#{qqopenid} where id=#{id}
     </update>
-
+    <select id="qqlogin" resultType="com.mxthd.bean.User">
+        select * from user where qqopenid=#{qqopenid}
+    </select>
     <!--在后台按照姓名某户查询-->
     <!--public List<User> getUsername(String username);-->
     <select id="getUsername" resultType="com.mxthd.bean.User">
