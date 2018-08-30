@@ -19,10 +19,7 @@
     <!--导入bootstrapcss-->
     <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
     <style>
-      #pageclass{
-          margin-top: 500px;
-          padding-left:360px;
-        }
+
     </style>
 </head>
 <body class="layui-layout-body">
@@ -72,22 +69,22 @@
 
 
     <!-- 员工显示积分的的模态框 -->
-    <div class="modal fade in" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="width: 1080px; height: 1000px;">
+    <div class="modal fade in" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+        <div class="modal-dialog" role="document" style="width: 1080px; height: 800px;" id="pay_table">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">员工积分的情况</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="layui-tab layui-tab-card" style="height: 400px;">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this" >支付</li>
-                        <li>未支付</li>
-                    </ul>
+                    <div class="layui-tab layui-tab-card" style="height: 420px;">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this" >支付</li>
+                            <li>未支付</li>
+                        </ul>
                     <div class="layui-tab-content" style="height: 100px;">
                         <div class="layui-tab-item layui-show" >
-                            <table class="layui-table" id="pay_table">
+                            <table class="layui-table" >
                                 <colgroup>
                                     <col width="150">
                                     <col width="200">
@@ -99,23 +96,18 @@
                                     <th>订单编号</th>
                                     <th>金额</th>
                                     <th>消费时间</th>
-                                    <th>支付</th>
+                                    <th>状态</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                      <!--显示每个用户的消费记录-->
                                 </tbody>
                             </table>
-                            <!-- 显示用户分页信息 -->
-                             <div class="row"  >
-                                <!--分页文字信息  -->
-                                <div class="col-md-4" id="page_info_areas" style="padding-top:50px ;"></div>
-                                <!-- 分页条信息 -->
-                                <div class="col-md-5 " id="page_nav_areas" style="padding-top:30px ;"></div>
-                            </div>
+
                         </div>
+
                         <div class="layui-tab-item">
-                            <table class="layui-table">
+                            <table class="layui-table" id="pay_table1">
                                 <colgroup>
                                     <col width="150">
                                     <col width="200">
@@ -127,37 +119,32 @@
                                     <th>订单编号</th>
                                     <th>金额</th>
                                     <th>消费时间</th>
-                                    <th>支付</th>
+                                    <th>状态</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>贤心</td>
-                                    <td>2016-11-29</td>
-                                    <td>人生就像是一场修行</td>
-                                    <td>人生就像是一场修行</td>
-                                    <td>人生就像是一场修行</td>
-                                </tr>
-                                <tr>
-                                    <td>许闲心</td>
-                                    <td>2016-11-28</td>
-                                    <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                                    <td>人生就像是一场修行</td>
-                                    <td>人生就像是一场修行</td>
-
-                                </tr>
+                                <!--显示每个用户的消费记录-->
                                 </tbody>
                             </table>
 
                         </div>
 
                     </div>
+
+                    </div>
                 </div>
+                <!-- 显示用户分页信息 -->
+                <div class="row"  >
+                    <!--分页文字信息  -->
+                    <div class="col-md-4" id="page_info_areas" style="padding-top:40px ;"></div>
+                    <!-- 分页条信息 -->
+                    <div class="col-md-5 " id="page_nav_areas" style="padding-top:10px ;"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="emp_save_btn">保存</button>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -277,10 +264,10 @@
             }else if(result.message == "pageByUsername"){
                 //点击跳首页
                 firstpageli.click(function () {
-                    to_page(1);
+                    title_page(1);
                 });
                 prepageli.click(function () {
-                    to_page(result.data.pageNum - 1);
+                    title_page(result.data.pageNum - 1);
                 });
             }
         }
@@ -291,7 +278,7 @@
             lastpageli.addClass("disabled");
         } else {
 
-            if(result.message == "pageByUsername") {
+            if(result.message == "pageInfo") {
                 nextpageli.click(function () {
                     to_page(result.data.pageNum + 1);
                 });
@@ -376,15 +363,29 @@
     $(document).on("click",".edit_btn",function(){
        //获取用户的id值
         var userName = $(this).parents("tr").find("td:eq(1)").text();
+      //  alert(userName);
         var userId = $(this).attr("edit_id");
-        //解析用户的消费信息
-         //pay_page(pn);
-        //打开模态框
+        $.ajax({
+            type:"GET",
+            url:"/admin/selectByPay",
+            data:{id:userId,pn:"1"},
+            success:function(result){
+                //回到本页
+                console.log(result);
+                //解析并显示用户信息
+                build_pay_table(result);
+                //分页
+                build_page_infos(result);
+                build_page_navs(result);
+
+            }
+        });
         $("#empAddModal").modal({
             backdrop:"static"
         });
     });
-    function pay_page(pn){
+
+    function to_idpage(pn){
         $.ajax({
             url:"/admin/selectByPay",
             data:"pn="+pn,
@@ -394,36 +395,117 @@
                 //解析并显示用户信息
                 build_pay_table(result);
                 //2、解析并显示分页信息
-                build_page_info(result)
+                build_page_infos(result)
                 //3、解析显示分页条数据
-                build_page_nav(result);
+                build_page_navs(result);
             }
         });
     };
 
 
-    //解析用户信息
+    //解析用户信息消费信息
     function build_pay_table(result) {
         $("#pay_table tbody").empty();
         var pays=result.data.list;
         //遍历输出
         $.each(pays,function (index,item) {
-            var pid = $("<td></td>").append(item.pay.id);//积分的编号
-            var ppid=$("<td></td>").append(item.pay.ppid);//消费的编号
-            var money=$("<td></td>").append(item.pay.money);//用户所使用的金额
-            var pay_create_time=$("<td></td>").append((new Date(item.pay.create_time)).Format("yyyy-MM-dd hh:mm:ss"));//用户消费的时间
-            var status=$("<td></td>").append(item.pay.status);//用户积分
+            var pid = $("<td></td>").append(item.id);//积分的编号
+            var ppid=$("<td></td>").append(item.ppid);//消费的编号
+            var money=$("<td></td>").append(item.money);//用户所使用的金额
+            var pay_create_time=$("<td></td>").append((new Date(item.createTime)).Format("yyyy-MM-dd hh:mm:ss"));//用户消费的时间
+            var status=$("<td></td>").append(item.status==1?'支付':'未支付');//用户积分
             //append方法执行完成以后还是返回原来的元素
-            $("<tr></tr>")
-                .append(pid)
-                .append(ppid)
-                .append(money)
-                .append(pay_create_time)
-                .append(status)
-                .addClass("active")
-                .appendTo("#pay_table tbody")
+            if(item.status==1) {
+                $("<tr></tr>")
+                    .append(pid)
+                    .append(ppid)
+                    .append(money)
+                    .append(pay_create_time)
+                    .append(status)
+                    .addClass("active")
+                    .appendTo("#pay_table tbody");
+            }else if(item.status==0){
+                $("<tr></tr>")
+                    .append(pid)
+                    .append(ppid)
+                    .append(money)
+                    .append(pay_create_time)
+                    .append(status)
+                    .addClass("active")
+                    .appendTo("#pay_table1 tbody");
+            }
+
 
         })
+    }
+
+    //分页
+    function build_page_infos(result) {
+        $("#page_info_areas").empty();
+        var page = result.data;
+        $("#page_info_areas").append("当前第" + page.pageNum +
+            "页,总共" + page.pages +"页"+ ",总" + page.total + "条记录");
+        //记录当前的总条数和页码数
+        totalRecord = page.total;
+        currentPage = page.pageNum;
+    }
+
+    function   build_page_navs(result) {
+        $("#page_nav_areas").empty();
+        var ul = $("<ul></ul>").addClass("pagination");
+        var firstpageli = $("<li></li>").append($("<a></a>").append("首页"));
+        var prepageli = $("<li></li>").append($("<a></a>").append("&laquo;"));
+        //判断是否有上一页
+        if (result.data.hasPreviousPage == false) {
+            firstpageli.addClass("disabled");//没有则class为禁用
+            prepageli.addClass("disabled");
+        } else {
+          if(result.message=="pageById"){
+                //点击跳首页
+                firstpageli.click(function () {
+                    to_idpage(1);
+                });
+                prepageli.click(function () {
+                    to_idpage(result.data.pageNum - 1);
+                });
+            }
+        }
+        var nextpageli = $("<li></li>").append($("<a></a>").append("&raquo;"));
+        var lastpageli = $("<li></li>").append($("<a></a>").append("末页"));
+        if (result.data.hasNextPage == false) {
+            nextpageli.addClass("disabled");
+            lastpageli.addClass("disabled");
+        } else {
+
+           if(result.message=="pageById"){
+                nextpageli.click(function () {
+                    to_idpage(result.data.pageNum + 1);
+                });
+                lastpageli.click(function () {
+                    to_idpage(result.data.pages);
+                });
+            }
+
+        }
+        ul.append(firstpageli).append(prepageli);//追加首页标签和上一页标签
+        var pages = result.data.navigatepageNums;//遍历导航页码数
+        $.each(pages, function (index, item) {
+            var numli = $("<li></li>").append($("<a></a>").append(item));//1-5页码数
+            //判断高亮页面
+            if (result.data.pageNum == item) {
+                numli.addClass("active");
+            }
+           if (result.message=="pageById"){
+                numli.click(function () {
+                    to_idpage(item);
+                });
+            }
+
+            ul.append(numli);
+        });
+        ul.append(nextpageli).append(lastpageli);//追加末页标签和下一页标签
+        // /*把ul加入到nav元素中*/
+        var nav = $("<nav></nav>").append(ul).appendTo("#page_nav_areas");
     }
 
 

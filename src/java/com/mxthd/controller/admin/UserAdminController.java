@@ -56,7 +56,7 @@ public class UserAdminController {
     @ResponseBody
     public JsonResult selectByPay(@RequestParam(value = "pn", defaultValue = "1")Integer pn,
                                   @RequestParam(value = "id")Integer id){
-        PageHelper.startPage(pn,8);
+        PageHelper.startPage(pn,5);
         List<Pay> users = payService.findByUid(id);
       // System.out.println(id);
         PageInfo pageInfo = new PageInfo(users,5);

@@ -69,8 +69,8 @@
 
 
     <!-- 员工显示积分的的模态框 -->
-    <div class="modal fade in" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document" style="width: 1080px; height: 800px;">
+    <div class="modal fade in" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+        <div class="modal-dialog" role="document" style="width: 1080px; height: 800px;" id="pay_table">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -84,7 +84,7 @@
                         </ul>
                     <div class="layui-tab-content" style="height: 100px;">
                         <div class="layui-tab-item layui-show" >
-                            <table class="layui-table" id="pay_table">
+                            <table class="layui-table" >
                                 <colgroup>
                                     <col width="150">
                                     <col width="200">
@@ -128,19 +128,21 @@
                             </table>
 
                         </div>
-                        <!-- 显示用户分页信息 -->
-                        <div class="row"  >
-                            <!--分页文字信息  -->
-                            <div class="col-md-4" id="page_info_areas" style="padding-top:70px ;"></div>
-                            <!-- 分页条信息 -->
-                            <div class="col-md-5 " id="page_nav_areas" style="padding-top:60px ;"></div>
-                        </div>
+
                     </div>
 
                     </div>
                 </div>
+                <!-- 显示用户分页信息 -->
+                <div class="row"  >
+                    <!--分页文字信息  -->
+                    <div class="col-md-4" id="page_info_areas" style="padding-top:40px ;"></div>
+                    <!-- 分页条信息 -->
+                    <div class="col-md-5 " id="page_nav_areas" style="padding-top:10px ;"></div>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
                 </div>
             </div>
             </div>
@@ -361,6 +363,7 @@
     $(document).on("click",".edit_btn",function(){
        //获取用户的id值
         var userName = $(this).parents("tr").find("td:eq(1)").text();
+      //  alert(userName);
         var userId = $(this).attr("edit_id");
         $.ajax({
             type:"GET",
@@ -384,7 +387,7 @@
 
     function to_idpage(pn){
         $.ajax({
-            url:"/admin/users",
+            url:"/admin/selectByPay",
             data:"pn="+pn,
             type:"GET",
             success:function(result){
@@ -401,9 +404,9 @@
 
 
     //解析用户信息消费信息
-    function build_pay_table(result1) {
+    function build_pay_table(result) {
         $("#pay_table tbody").empty();
-        var pays=result1.data.list;
+        var pays=result.data.list;
         //遍历输出
         $.each(pays,function (index,item) {
             var pid = $("<td></td>").append(item.id);//积分的编号
@@ -502,7 +505,7 @@
         });
         ul.append(nextpageli).append(lastpageli);//追加末页标签和下一页标签
         // /*把ul加入到nav元素中*/
-        var nav = $("<nav></nav>").append(ul).appendTo("#page_nav_area");
+        var nav = $("<nav></nav>").append(ul).appendTo("#page_nav_areas");
     }
 
 
