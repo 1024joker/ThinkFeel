@@ -121,7 +121,7 @@ public class ApiController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/upload/editormdPic",produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/upload/editormdPic",produces = "application/json; charset=utf-8",method = RequestMethod.POST)
     @ResponseBody
     public String uploadEditormdpic(
             @RequestParam(value = "editormd-image-file",required = true)MultipartFile file,

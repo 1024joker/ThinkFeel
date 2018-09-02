@@ -29,4 +29,10 @@ public class GoodsHtmlController {
     public String addGoods(){
         return "admin/goodsEdit";
     }
+
+    /*商品类型的条跳转页面*/
+    @RequestMapping("/typeGoods")
+    public String typeGoods(){
+        return "admin/goodsType";
+    }
 }

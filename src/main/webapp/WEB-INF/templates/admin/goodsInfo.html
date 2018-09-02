@@ -11,66 +11,70 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <!--导入js-->
-    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}" ></script>
-    <script src="/layui/layui.js" th:src="@{/layui/layui.js}" ></script>
-    <script src="/js/bootstrap.min.js" th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}" ></script>
+    <script src="/js/jquery-3.2.1.js" th:src="@{/js/jquery-3.2.1.js}"></script>
+    <script src="/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+    <script src="/js/bootstrap.min.js" th:src="@{https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
     <!--layui 导入css-->
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <!--导入bootstrapcss-->
-    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" th:href="@{https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css}"
+          rel="stylesheet">
 </head>
 <body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <!--加载头部区域-->
-        <div th:replace="admin/common/top :: top"></div>
-        <!--加载左侧导航栏-->
-        <div th:replace="admin/common/left :: left"></div>
-        <!--商品信息主体区域-->
-        <div class="layui-body" id="tab_body">
-            <div style="padding-top: 10px;padding-left: 30px" class="col-md-12" id="tab_content">
-                <!--搜索商品标题框-->
-                <form class="form-inline">
-                    <input type="text" id="title" class="form-control" style="width: 200px" placeholder="商品标题搜索"/>
-                    <button type="button" class="btn btn-default glyphicon glyphicon-search" id="search" style="font-weight: bold">搜索</button>
-                </form>
-                <!--显示商品-->
-                <table class="table" id="goods_table">
-                    <thead>
-                    <tr>
-                        <th>商品编号</th>
-                        <th>商品类型</th>
-                        <th>商品标题</th>
-                        <th>兑换商品所需积分</th>
-                        <th>库存</th>
-                        <th>兑换人次</th>
-                        <th>是否能重复兑换</th>
-                        <th>是否上架</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <!--商品信息-->
-                    </tbody>
-                </table>
-            </div>
-            <div class="row" style="padding-left: 30px">
-                <!--分页信息-->
-                <div class="col-md-4" id="page_info_area" style="padding-top: 30px">
-
-                </div>
-                <div class="col-md-5 col-md-offset-3" id="page_nav_area">
-                    <!--分页条信息-->
-
-                </div>
-            </div>
+<div class="layui-layout layui-layout-admin">
+    <!--加载头部区域-->
+    <div th:replace="admin/common/top :: top"></div>
+    <!--加载左侧导航栏-->
+    <div th:replace="admin/common/left :: left"></div>
+    <!--商品信息主体区域-->
+    <div class="layui-body" id="tab_body">
+        <div style="padding-top: 10px;padding-left: 30px" class="col-md-12" id="tab_content">
+            <!--搜索商品标题框-->
+            <form class="form-inline">
+                <input type="text" id="title" class="form-control" style="width: 200px" placeholder="商品标题搜索"/>
+                <button type="button" class="btn btn-default glyphicon glyphicon-search" id="search"
+                        style="font-weight: bold">搜索
+                </button>
+            </form>
+            <!--显示商品-->
+            <table class="table" id="goods_table">
+                <thead>
+                <tr>
+                    <th>#商品编号</th>
+                    <th>商品类型</th>
+                    <th>商品标题</th>
+                    <th>兑换商品所需积分</th>
+                    <th>库存</th>
+                    <th>兑换人次</th>
+                    <th>是否能重复兑换</th>
+                    <th>是否上架</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--商品信息-->
+                </tbody>
+            </table>
         </div>
-        <div class="layui-footer" style="height: 40px">
-            <!-- 底部固定区域 -->
-            © ThinkFeel后台管理系统
+        <div class="row" style="padding-left: 30px">
+            <!--分页信息-->
+            <div class="col-md-4" id="page_info_area" style="padding-top: 30px">
+
+            </div>
+            <div class="col-md-5 col-md-offset-3" id="page_nav_area">
+                <!--分页条信息-->
+
+            </div>
         </div>
     </div>
+    <div class="layui-footer" style="height: 40px">
+        <!-- 底部固定区域 -->
+        © ThinkFeel后台管理系统
+    </div>
+    <input hidden="hidden" th:value="${pn_n}" id="pn"/>
+</div>
 <script type="text/javascript">
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
     });
     //当页面加载的时候去第一页
@@ -78,20 +82,19 @@
     $(function () {
         $("#goods_type").addClass("layui-bg-green");
         $("#goods_manage").addClass("layui-nav-itemed");
-        to_page(1);
+        to_page($("#pn").val());
     });
 
     //ajax加载数据信息
-    function to_page(pn){
+    function to_page(pn) {
         $.ajax({
-            url:"/admin/goods",
-            data:"pn="+pn,
-            type:"GET",
-            success:function(result){
-                console.log(result)
-                if(pn>result.data.pages){
+            url: "/admin/goods",
+            data: "pn=" + pn,
+            type: "GET",
+            success: function (result) {
+                if (pn > result.data.pages) {
                     to_page(result.data.pages);
-                }else if(pn<result.data.firstPage){
+                } else if (pn < result.data.firstPage) {
                     to_page(1);
                 }
                 //解析并显示商品信息
@@ -103,20 +106,21 @@
             }
         });
     };
+
     //1.解析并显示原员工
     function build_goods_table(result) {
         $("#goods_table tbody").empty();
         var goods = result.data.list;
         /*使用jQuery遍历*/
-        $.each(goods,function (index,item) {
+        $.each(goods, function (index, item) {
             var goodsId = $("<td></td>").append(item.id);//商品编号
             var goodsType = $("<td></td>").append(item.goodsClass.name);//商品类型
             var goodsTitle = $("<td></td>").append(item.title);//商品标题
             var goodsCredit = $("<td></td>").append(item.creditprice);//兑换商品所需积分
             var goodsStock = $("<td></td>").append(item.stock);//商品库存
             var goodsExCount = $("<td></td>").append(item.exchangeCount);//商品兑换次数
-            var goodsRepeat = $("<td></td>").append(item.type == '0' ?"不能重复兑换":"可以重复兑换");//商品能否重复兑换
-            var goodsPublish = $("<td></td>").append(item.post == '0'?"上架":"未上架");//商品是否上架
+            var goodsRepeat = $("<td></td>").append(item.type == '0' ? "不能重复兑换" : "可以重复兑换");//商品能否重复兑换
+            var goodsPublish = $("<td></td>").append(item.post == '0' ? "上架" : "未上架");//商品是否上架
             /*按钮标签*/
             var editBtn = $("<button></button>").addClass("btn btn-primary edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
@@ -126,15 +130,19 @@
                 .append("删除");//删除按钮
             var btn = $("<span></span>").append(editBtn).append("<span> </span>").append(delBtn);
             /*将员工id存放到编辑按钮里面，点击的时候，将id值传进另一个页面*/
-            editBtn.attr("edit_id",item.id);
+            editBtn.attr("edit_id", item.id);
             /*将当前员工页码数存进按钮进行传值，在修改完成之后 返回当前页码*/
-            editBtn.attr("edit_pg",result.data.pageNum);
+            editBtn.attr("edit_pg", result.data.pageNum);
+            /*将员工id存放到删除按钮里面，点击的时候根据id删除*/
+            delBtn.attr("del_id", item.id);
+            /*将当前员工页码数存进按钮进行传值，在删除完成之后 刷新当前页码*/
+            delBtn.attr("del_pg", result.data.pageNum);
             //将td标签添加进一个tr
-            if(item.post == 1) {
+            if (item.post == 1) {
                 $("<tr></tr>").append(goodsId).append(goodsType).append(goodsTitle).append(goodsCredit).append(goodsStock)
                     .append(goodsExCount).append(goodsRepeat).append(goodsPublish).append(btn)
                     .addClass("warning").appendTo("#goods_table tbody");
-            }else {
+            } else {
                 $("<tr></tr>").append(goodsId).append(goodsType).append(goodsTitle).append(goodsCredit).append(goodsStock)
                     .append(goodsExCount).append(goodsRepeat).append(goodsPublish).append(btn)
                     .addClass("active").appendTo("#goods_table tbody");
@@ -146,7 +154,7 @@
     function build_page_Info(result) {
         $("#page_info_area").empty();
         var page = result.data;
-        $("#page_info_area").append("当前第" + page.pageNum + "页,总共" + page.pages +"页"+ ",总" + page.total + "条记录");
+        $("#page_info_area").append("当前第" + page.pageNum + "页,总共" + page.pages + "页" + ",总" + page.total + "条记录");
         //记录当前的总条数和页码数
         totalRecord = page.total;
         currentPage = page.pageNum;
@@ -164,7 +172,7 @@
             prepageli.addClass("disabled");
         } else {
             //判断是不是按条件跳页
-            if(result.message == "pageInfo") {
+            if (result.message == "pageInfo") {
                 //点击跳首页
                 firstpageli.click(function () {
                     to_page(1);
@@ -172,7 +180,7 @@
                 prepageli.click(function () {
                     to_page(result.data.pageNum - 1);
                 });
-            }else if(result.message == "pagesByTitle"){
+            } else if (result.message == "pagesByTitle") {
                 firstpageli.click(function () {
                     title_page(1);
                 });
@@ -187,14 +195,14 @@
             nextpageli.addClass("disabled");
             lastpageli.addClass("disabled");
         } else {
-            if(result.message == "pageInfo") {
+            if (result.message == "pageInfo") {
                 nextpageli.click(function () {
                     to_page(result.data.pageNum + 1);
                 });
                 lastpageli.click(function () {
                     to_page(result.data.pages);
                 });
-            }else if(result.message == "pagesByTitle"){
+            } else if (result.message == "pagesByTitle") {
                 nextpageli.click(function () {
                     title_page(result.data.pageNum + 1);
                 });
@@ -212,11 +220,11 @@
                 numli.addClass("active");
             }
             //点击需要跳转的具体页面
-            if(result.message == "pageInfo"){
+            if (result.message == "pageInfo") {
                 numli.click(function () {
                     to_page(item);
                 });
-            }else if(result.message == "pagesByTitle"){
+            } else if (result.message == "pagesByTitle") {
                 numli.click(function () {
                     title_page(item);
                 });
@@ -244,6 +252,7 @@
             }
         });
     });
+
     /*搜索条件之后的分页查询函数*/
     function title_page(pn) {
         $.ajax({
@@ -262,12 +271,37 @@
     }
 
     /*编辑按钮的 点击事件*/
-    $(document).on("click",".edit_btn",function () {
+    $(document).on("click", ".edit_btn", function () {
         var editId = $(this).attr("edit_id");        //商品id
         var pageNum = $(this).attr("edit_pg");      //商品当前页码
-        window.location.href = "/ht/editGoods?editId="+editId+"&pageNum="+pageNum;
+        window.location.href = "/ht/editGoods?editId=" + editId + "&pageNum=" + pageNum;
     });
 
+    /*删除按钮的点击事件*/
+    $(document).on("click", ".delete_btn", function () {
+        var delId = $(this).attr("del_id");//当前商品id的值
+        var pn = $(".delete_btn").attr("del_pg");//当前pageNum的值
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.confirm('是否确定删除此商品？', {icon: 3, title: '提示'}, function (index) {
+                $.ajax({
+                    url: "/admin/deleteGoods",
+                    data: {delId: delId},
+                    success: function (result) {
+                        //刷新本页面
+                        if (result == 1) {
+                            layer.msg('      删除成功     ');
+                            setTimeout(window.location.href = "/ht/goods?pn="+pn);
+                        }else {
+                            layer.msg('      删除失败     ');
+                            window.location.href = "/ht/goods?pn="+pn;
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        });
+    });
 
 </script>
 </body>

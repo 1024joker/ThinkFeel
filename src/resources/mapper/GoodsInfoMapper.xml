@@ -58,8 +58,8 @@
     </update>
     <!--新增商品    public Goods addGoods(Goods goods)-->
     <insert id="addGoods" parameterType="com.mxthd.bean.Goods">
-        INSERT INTO goods(title,content,goodsclass_id,marketprice,creditprice,stock,type,post)
-        VALUES (#{title},#{content},#{goodsclassId},#{marketprice},#{creditprice},#{stock},#{type},#{post})
+        INSERT INTO goods(title,content,goodsclass_id,marketprice,creditprice,stock,type,post,photo)
+        VALUES (#{title},#{content},#{goodsclassId},#{marketprice},#{creditprice},#{stock},#{type},#{post},#{photo})
     </insert>
     <!--根据id 修改商品    public Integer updateGoods(Integer editId);-->
     <update id="updateGoods">
@@ -73,7 +73,12 @@
             stock = #{goods.stock},
             post = #{goods.post},
             type = #{goods.type},
+            photo = #{goods.photo}
         </set>
         where id = #{editId}
     </update>
+    <!--根据id 删除商品 public int deleteGoods(Integer delId);-->
+    <delete id="deleteGoods">
+        DELETE FROM goods WHERE id=#{delId}
+    </delete>
 </mapper>

@@ -58,4 +58,9 @@ public class GoodsInfoService {
     public Integer updateById(Goods goods,Integer editId) {
         return goodsInfoMapper.updateGoods(goods,editId);
     }
+
+    /*根据id删除商品信息*/
+    public int deleteById(Integer delId) {
+        return goodsInfoMapper.deleteGoods(delId);
+    }
 }

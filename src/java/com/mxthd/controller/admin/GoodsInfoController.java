@@ -103,5 +103,13 @@ public class GoodsInfoController {
         int i = goodsInfoService.updateById(goods,editId);
         return i;
     }
+
+    @RequestMapping("/deleteGoods")
+    @ResponseBody
+    /*根据商品id 删除商品信息*/
+    public Integer deleteGoods(@RequestParam(value = "delId") Integer delId){
+        int i = goodsInfoService.deleteById(delId);
+        return i;
+    }
 }
 

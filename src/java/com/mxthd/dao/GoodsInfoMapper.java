@@ -17,6 +17,8 @@ public interface GoodsInfoMapper {
     public void click(Integer id);
     //    增加一个商品
     public Integer addGoods(Goods goods);
-    //    修改一个商品
+    //    修改一个商品byid
     public Integer updateGoods(@Param("goods") Goods goods,@Param("editId") Integer editId);
+    //    删除一个商品byid
+    public int deleteGoods(Integer delId);
 }

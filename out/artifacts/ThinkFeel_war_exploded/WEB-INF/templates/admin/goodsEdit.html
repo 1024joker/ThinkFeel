@@ -32,14 +32,21 @@
     <!--商品信息主体区域-->
     <div class="layui-body" id="tab_body">
         <div style="padding-top: 30px;padding-left: 80px" class="col-md-12" id="tab_content">
-            <form class="layui-form layui-form-pane" id="goodsFrom" lay-filter="formTest" name="gf">
-                <fieldset class="layui-elem-field layui-field-title" id="goods_edit_form" style="margin-top: 30px;">
-                    <legend>商品新增与修改</legend>
-                </fieldset>
-                <div class="layui-upload-drag" id="test10">
-                    <i class="layui-icon"></i>
-                    <p>点击上传，或将文件拖拽到此处</p>
+            <fieldset class="layui-elem-field layui-field-title" id="goods_edit_form" style="margin-top: 30px;">
+                <legend>商品新增与修改</legend>
+            </fieldset>
+            <div class="layui-upload" disabled="disabled">
+                <button class="layui-btn" style="height: 38px"; >
+                    图片上传
+                    <input type="file" id="test1" name="editormd-image-file"
+                           style='opacity:0;filter:alpha(opacity=0);display: inline-block;width: 100px'/>
+                </button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1" style="width: 100px;height: 100px">
+                    <p id="demoText"></p>
                 </div>
+            </div>
+            <form class="layui-form layui-form-pane" id="goodsFrom" lay-filter="formTest" name="gf">
                 <div style="height: 15px"></div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品标题</label>
@@ -103,6 +110,8 @@
                         </div>
                     </div>
                 </div>
+                <!--图片上传的url值-->
+                <input hidden="hidden" name="photo" id="photo">
                 <input hidden="hidden" th:value="${editId}" id="editId" name="id">
                 <input hidden="hidden" th:value="${pageNum}" id="pageNum">
                 <div class="layui-form-item">
@@ -132,12 +141,31 @@
     layui.use('upload', function () {
         var $ = layui.jquery
             , upload = layui.upload;
-        //拖拽上传
-        upload.render({
-            elem: '#test10'
+        var uploadInst = upload.render({
+            elem: '#test1'
             , url: '/api/upload/editormdPic'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
             , done: function (res) {
-                console.log(res)
+                var url = res.url;
+                $("#photo").attr("value",url);
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
             }
         });
     });
@@ -151,12 +179,12 @@
             //自定义验证规则
             form.verify({
                 goodsTitle: function (value, item) {
-                    if (value.length < 4 ) {
+                    if (value.length < 4) {
                         return "内容请输入至少4个字符";
                     }
                 },
                 goodsTitle: function (value, item) {
-                    if (value.trim()=='') {
+                    if (value.trim() == '') {
                         return "内容不能为空";
                     }
                 },
@@ -230,7 +258,10 @@
                 type: "GET",
                 success: function (result) {
                     /*给form表单回显*/
+                    console.log(result);
                     var info = result.data;
+                    //加载商品图片
+                    $('#demo1').attr('src', info.photo);
                     $("#goods_title_input").val(info.title);
                     $("#goods_price_input").val(info.marketprice);
                     $("#goods_credit_input").val(info.creditprice);
@@ -282,21 +313,21 @@
         var editId = $("#editId").val();
         /*判断商品标题长度 是否大于=4*/
         var title = $("#goods_title_input").val();
-        if(editId > 0){
+        if (editId > 0) {
             /*ajax修改商品信息*/
             // renderform();
-            if (title.length >= 4 && title.trim()!='') {
+            if (title.length >= 4 && title.trim() != '') {
                 $.ajax({
-                    url: "/admin/updateGoods?editId="+editId,
+                    url: "/admin/updateGoods?editId=" + editId,
                     type: "POST",
                     data: $("#tab_content form").serialize(),
                     success: function (result) {
-                        var pn = $("#pageNum").val();
+                        var pn = $("#pageNum").val();//编辑信息所在的pageNum
                         window.location.href = "/ht/goods?pn=" + pn;
                     }
                 });
             }
-        }else {
+        } else {
             /*ajax新增商品信息*/
             if (title.length >= 4) {
                 $.ajax({
@@ -305,7 +336,7 @@
                     data: $("#tab_content form").serialize(),
                     success: function (result) {
                         $("#goodsFrom").empty();
-                        var pn = result.data;
+                        var pn = result.data;//商品信息的最大页码
                         window.location.href = "/ht/goods?pn=" + pn;
                     }
                 });

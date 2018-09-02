@@ -16,4 +16,9 @@
     <select id="getAll" resultType="com.mxthd.bean.GoodsClass">
         select * from goodsclass
     </select>
+    <!--增加一个商品类型public Integer addGoodsType();-->
+    <insert id="addGoodsType" parameterType="com.mxthd.bean.GoodsClass">
+        INSERT INTO goodsclass(name)
+        VALUES (#{name})
+    </insert>
 </mapper>
