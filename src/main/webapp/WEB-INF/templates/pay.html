@@ -61,11 +61,17 @@
             <blockquote class="layui-elem-quote" th:if="${msg!=null}">
                 <div id="test2" th:text="${msg}">提示信息</div>
             </blockquote>
-            <form method="post" th:action="@{/pay}" target="_blank">
-            <h3>积分充值</h3>
-            充值积分: <input type="text" th:name="money"> <button type="submit">充值</button>
+            <form class="layui-form" action="/pay" target="_blank">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100px;font-family:'黑体';">积分充值</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="money" required lay-verify="required" placeholder="请输入充值的积分" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux" >
+                        <button class="layui-btn layui-btn-radius layui-btn-normal" type="submit" style="width: 80px;margin-top: -10px">充值</button>
+                    </div>
+                </div>
             </form>
-
             <h3>充值记录</h3>
             <table class="layui-table" lay-size="sm">
                 <colgroup>

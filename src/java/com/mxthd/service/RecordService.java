@@ -15,4 +15,7 @@ public class RecordService {
     public List<Record> findByUid(int uid){
        return recordMapper.findByUid(uid);
     }
+    public Record findId(int id){
+        return recordMapper.findId(id);
+    }
 }

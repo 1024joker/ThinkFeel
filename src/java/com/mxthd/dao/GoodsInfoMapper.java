@@ -2,6 +2,7 @@ package com.mxthd.dao;
 
 import com.mxthd.bean.Goods;
 import org.apache.ibatis.annotations.Param;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface GoodsInfoMapper {
     //    删除一个商品byid
     public int deleteGoods(Integer delId);
     public void updateBystock(@Param("id") Integer id,@Param("stock") Integer stock);
+    //商品数量-1
+    public void updateStock(Integer id);
 }

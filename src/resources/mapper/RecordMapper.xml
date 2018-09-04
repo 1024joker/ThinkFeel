@@ -6,4 +6,10 @@
     <select id="findByUid" resultType="com.mxthd.bean.Record">
         select * from record where user_id=#{user_id}
     </select>
+    <insert id="add">
+        insert into record(user_id,goods_id,goods_title,cardcode_id) value (#{uid},#{gid},#{gTitle},#{Cid})
+    </insert>
+    <select id="findId" resultType="com.mxthd.bean.Record">
+        select * from record where id = #{id}
+    </select>
 </mapper>
