@@ -12,4 +12,6 @@ public interface GoodsClassMapper {
     public List<GoodsClass> getAll();
     /*增加一个商品类型*/
     public Integer addGoodsType(GoodsClass goodsClass);
+    /*修改商品类型*/
+    public Integer goodsEdit(@Param("GoodsClass") GoodsClass goodsClass,@Param("id") Integer id);
 }

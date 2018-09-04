@@ -24,4 +24,8 @@ public class GoodsClassService {
     public Integer addGoodsType(GoodsClass goodsClass) {
         return goodsClassMapper.addGoodsType(goodsClass);
     }
+
+    public Integer goodsEdit(GoodsClass goodsClass,Integer id) {
+        return goodsClassMapper.goodsEdit(goodsClass,id);
+    }
 }

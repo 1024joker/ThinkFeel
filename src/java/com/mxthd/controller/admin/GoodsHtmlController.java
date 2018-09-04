@@ -35,4 +35,19 @@ public class GoodsHtmlController {
     public String typeGoods(){
         return "admin/goodsType";
     }
+
+    /*卡密编辑*/
+    @RequestMapping("/goodsCode")
+    public ModelAndView goodsCode(@RequestParam(value = "goodsId") Integer goodsId
+            ,@RequestParam(value = "pageNum") Integer pageNum){
+        ModelAndView modelAndView = new ModelAndView("admin/cardCode");
+        modelAndView.addObject("editId", goodsId);
+        modelAndView.addObject("pageNum", pageNum);
+        return modelAndView;
+    }
+    /*卡密列表*/
+    @RequestMapping("/codeGoods")
+    public String goodsCodes(){
+        return "/admin/cardCode";
+    }
 }

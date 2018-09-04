@@ -21,4 +21,12 @@
         INSERT INTO goodsclass(name)
         VALUES (#{name})
     </insert>
+    <!--修改一个商品类型的名称     public Integer goodsEdit(Integer id);-->
+    <update id="goodsEdit">
+        update goodsclass
+        <set>
+            name = #{GoodsClass.name}
+        </set>
+        WHERE id=#{id}
+    </update>
 </mapper>

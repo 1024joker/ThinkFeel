@@ -35,4 +35,11 @@ public class GoodsClassesController {
         JsonResult jsonResult = new JsonResult(0,"getGoodsType",all);
         return jsonResult;
     }
+    @RequestMapping("/goodsEdit")
+    @ResponseBody
+    /*查询所有商品类型*/
+    public Integer goodsEdit(GoodsClass goodsClass,@RequestParam("id") Integer id){
+        int i = goodsClassService.goodsEdit(goodsClass,id);
+        return i;
+    }
 }
