@@ -443,6 +443,7 @@
     function build_page_infos(result) {
         $("#page_info_areas").empty();
         var page = result.data;
+
         $("#page_info_areas").append("当前第" + page.pageNum +
             "页,总共" + page.pages +"页"+ ",总" + page.total + "条记录");
         //记录当前的总条数和页码数
