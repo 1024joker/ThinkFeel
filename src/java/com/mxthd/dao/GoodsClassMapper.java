@@ -14,4 +14,6 @@ public interface GoodsClassMapper {
     public Integer addGoodsType(GoodsClass goodsClass);
     /*修改商品类型*/
     public Integer goodsEdit(@Param("GoodsClass") GoodsClass goodsClass,@Param("id") Integer id);
+    /*删除商品类型*/
+    int goodsDel(@Param("id") Integer id);
 }

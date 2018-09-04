@@ -42,4 +42,12 @@ public class GoodsClassesController {
         int i = goodsClassService.goodsEdit(goodsClass,id);
         return i;
     }
+
+    /*删除商品类型*/
+    @RequestMapping("/goodsDel")
+    @ResponseBody
+    public Integer goodsDelete(@RequestParam("id") Integer id){
+        int i = goodsClassService.goodsDel(id);
+        return i;
+    }
 }

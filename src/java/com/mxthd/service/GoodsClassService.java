@@ -24,8 +24,12 @@ public class GoodsClassService {
     public Integer addGoodsType(GoodsClass goodsClass) {
         return goodsClassMapper.addGoodsType(goodsClass);
     }
-
+    /*编辑商品类型*/
     public Integer goodsEdit(GoodsClass goodsClass,Integer id) {
         return goodsClassMapper.goodsEdit(goodsClass,id);
+    }
+    /*删除一个商品类型*/
+    public int goodsDel(Integer id) {
+        return goodsClassMapper.goodsDel(id);
     }
 }

@@ -15,4 +15,13 @@
     <select id="findId" resultType="com.mxthd.bean.CardCode">
         select * from cardcode where id =#{id}
     </select>
+    <!--获取卡密列表     List<CardCode> getCardCode();-->
+    <select id="getCardCode" resultType="com.mxthd.bean.CardCode">
+        SELECT * from cardcode
+    </select>
+    <!--新增卡密     int addCardCode();-->
+    <insert id="addCardCode" parameterType="com.mxthd.bean.CardCode">
+        INSERT INTO cardcode(goods_id,code)
+        VALUES (#{goodsId},#{code})
+    </insert>
 </mapper>

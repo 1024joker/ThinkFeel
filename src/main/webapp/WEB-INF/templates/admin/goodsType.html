@@ -205,17 +205,20 @@
 
     /*点击保存商品类型按钮*/
     $("#addGoodsType_sub").click(function () {
-        $.ajax({
-           url:"/goodsType/addGoodsType",
-           type:"POST",
-           data:$("#goodsTypeAddModal form").serialize(),
-           success:function (result) {
-               $("#goodsTypeAddModal").modal('hide');//关闭模态框
-               if(result == 1){
-                    alert("新增成功")
-                   loadGoodsType();//重新加载表格函数
-               }
-           }
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            $.ajax({
+                url: "/goodsType/addGoodsType",
+                type: "POST",
+                data: $("#goodsTypeAddModal form").serialize(),
+                success: function (result) {
+                    $("#goodsTypeAddModal").modal('hide');//关闭模态框
+                    if (result == 1) {
+                        layer.msg("新增成功");
+                        loadGoodsType();//重新加载表格函数
+                    }
+                }
+            });
         });
     });
 
@@ -258,6 +261,30 @@
         });
     })
 
+    /*删除按钮的点击事件*/
+    $(document).on("click", ".delete_btn", function () {
+        var delId = $(this).attr("del_id");//当前商品id的值
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.confirm('是否确定删除此商品类型?', {icon: 3, title: '提示'}, function (index) {
+                $.ajax({
+                    url: "/goodsType/goodsDel",
+                    data: {id: delId},
+                    success: function (result) {
+                        //刷新本页面
+                        if (result == 1) {
+                            layer.msg('      删除成功     ');
+                            loadGoodsType();
+                        }else {
+                            layer.msg('      删除失败     ');
+                            loadGoodsType();
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        });
+    });
 </script>
 </body>
 </html>

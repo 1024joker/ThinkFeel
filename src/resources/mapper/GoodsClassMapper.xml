@@ -29,4 +29,8 @@
         </set>
         WHERE id=#{id}
     </update>
+    <!--删除商品类型     int goodsDel(Integer id);-->
+    <delete id="goodsDel">
+        DELETE FROM goodsclass WHERE id=#{id}
+    </delete>
 </mapper>

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mxthd.bean.Goods;
 import com.mxthd.bean.GoodsClass;
+import com.mxthd.service.CardCodeService;
 import com.mxthd.service.GoodsClassService;
 import com.mxthd.service.GoodsInfoService;
 import com.mxthd.util.JsonResult;
