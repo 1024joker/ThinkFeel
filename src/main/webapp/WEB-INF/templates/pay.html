@@ -61,7 +61,7 @@
             <blockquote class="layui-elem-quote" th:if="${msg!=null}">
                 <div id="test2" th:text="${msg}">提示信息</div>
             </blockquote>
-            <form class="layui-form" action="/pay" target="_blank">
+            <form class="layui-form" action="/pay" target="_blank" method="post">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 100px;font-family:'黑体';">积分充值</label>
                     <div class="layui-input-inline">
