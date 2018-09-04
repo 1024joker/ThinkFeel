@@ -84,4 +84,7 @@
     <update id="updateBystock">
         update goods set stock=#{stock} where id=#{id}
     </update>
+    <update id="updateStock">
+        update goods set stock=stock-1 where id=#{id}
+    </update>
 </mapper>

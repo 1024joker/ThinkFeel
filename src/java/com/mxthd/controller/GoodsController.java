@@ -42,6 +42,11 @@ public class GoodsController {
         if(countByGood<=0){
             return new JsonResult("库存不足");
         }
+        try {
+            goodsInfoService.guomai(id,user.getId());
+        }catch (Exception e){
+            return new JsonResult("交易失败，请稍后重试！");
+        }
         return new JsonResult(JsonResult.SUCCESS,"兑换成功",null);
     }
 }

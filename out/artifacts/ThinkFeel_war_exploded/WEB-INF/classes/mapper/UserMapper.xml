@@ -29,6 +29,9 @@
     <update id="updateQQOpenid">
         update user set qqopenid=#{qqopenid} where id=#{id}
     </update>
+    <update id="updateByavatar">
+        update user set avatar=#{avatar} where id=#{id}
+    </update>
     <select id="qqlogin" resultType="com.mxthd.bean.User">
         select * from user where qqopenid=#{qqopenid}
     </select>

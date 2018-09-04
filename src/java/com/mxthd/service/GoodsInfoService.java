@@ -1,7 +1,10 @@
 package com.mxthd.service;
 
+import com.mxthd.bean.CardCode;
 import com.mxthd.bean.Goods;
+import com.mxthd.dao.CardCodeMapper;
 import com.mxthd.dao.GoodsInfoMapper;
+import com.mxthd.dao.RecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,10 @@ import java.util.List;
 public class GoodsInfoService {
     @Autowired
     GoodsInfoMapper goodsInfoMapper;
+    @Autowired
+    CardCodeMapper cardCodeMapper;
+    @Autowired
+    RecordMapper recordMapper;
     /*
     * 查询所有员工（可以接条件）
     * */
@@ -66,5 +73,15 @@ public class GoodsInfoService {
 //    改库存
     public void updateBystock(Integer id,Integer stock){
         goodsInfoMapper.updateBystock(id,stock);
+    }
+    public void guomai(Integer id,Integer uid){
+        //商品数量-1
+        goodsInfoMapper.updateStock(id);
+        Goods byId = goodsInfoMapper.getById(id);
+        //修改卡密状态
+        CardCode byGidStateOK = cardCodeMapper.findByGidStateOK(id);
+        cardCodeMapper.updateState(byGidStateOK.getId());
+        //生成消费记录
+        recordMapper.add(uid,id,byId.getTitle(),byGidStateOK.getId());
     }
 }

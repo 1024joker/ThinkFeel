@@ -60,7 +60,7 @@
 
             <div class="form-horizontal">
                 <div style="margin-left: 17%">
-                    <img width="60px" height="60px" src="${user.avatar}" th:src="${url}+${user.avatar}" class="img-rounded">
+                    <img width="60px" height="60px" src="${user.avatar}" th:src="${url}+${user.avatar}" class="img-rounded" id="showtx">
                     <button class="btn btn-default" id="dianji">更换头像</button>
                     <input type="file" id="touxiang" name="editormd-image-file" style="display:none">
                 </div>
@@ -116,6 +116,36 @@
 <!-- 引入footer文件 -->
 <footer th:replace="commons/footer :: footer"></footer>
 <script>
+var file = null;
+$(document).on("change", "#touxiang", function(e) {
+    file = e.target.files[0];
+    var data = new FormData(); // 创建一个表单数据对象
+    data.append("editormd-image-file", file);
+    $.ajax({
+        url: "/api/upload/editormdPic",
+        type: "POST",
+        data: data,
+        async: false,
+        cache: false,
+        processData: false, // 这里一定要写成false，不处理发送的数据
+        contentType: false, // 不设置发送头
+        success: function(res) {
+            console.log(res);
+            // 上传成功之后的处理逻辑
+            $.ajax({
+                url:"/user/avatar",
+                type:"post",
+                dataType:"json",
+                data:{avatar:res.url},
+                success:function (result) {
+                    $("#showtx").attr("src",res.url);
+                    alert(result.message);
+                }
+            })
+        }
+    });
+});
+
 $("#dianji").click(function () {
     $("#touxiang").click();
 })

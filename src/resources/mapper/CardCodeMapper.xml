@@ -6,4 +6,13 @@
     <select id="findCountByGood" resultType="int">
         select count(id) from cardcode where goods_id = #{gid} and state = 0
     </select>
+    <select id="findByGidStateOK" resultType="com.mxthd.bean.CardCode">
+        select * from cardcode where goods_id = #{gid} and state = 0 limit 1
+    </select>
+    <update id="updateState">
+        update cardcode set state = 1 where id=#{id}
+    </update>
+    <select id="findId" resultType="com.mxthd.bean.CardCode">
+        select * from cardcode where id =#{id}
+    </select>
 </mapper>

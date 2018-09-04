@@ -82,8 +82,16 @@ public class UserController {
     /**
      * 修改头像
      */
-    public JsonResult updateAvatar(String avatar,HttpSession httpSession){
-        return null;
+    @RequestMapping("/avatar")
+    @ResponseBody
+    public JsonResult updateAvatar(String avatar,HttpSession session){
+        try {
+            User user = (User)session.getAttribute("login_user");
+            userService.updateByavatar(user.getId(),avatar);
+        }catch (Exception e){
+            return new JsonResult("修改头像失败");
+        }
+        return new JsonResult(JsonResult.SUCCESS,"修改头像成功",null);
     }
 
     /**
