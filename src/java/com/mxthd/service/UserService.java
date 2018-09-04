@@ -77,5 +77,7 @@ public class UserService {
     public User qqlogin(String qqopenid){
         return userMapper.qqlogin(qqopenid);
     }
-
+    public void updateByavatar(Integer id,String avatar){
+        userMapper.updateByavatar(id,avatar);
+    }
 }

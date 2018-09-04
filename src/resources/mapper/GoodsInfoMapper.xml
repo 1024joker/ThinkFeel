@@ -81,4 +81,7 @@
     <delete id="deleteGoods">
         DELETE FROM goods WHERE id=#{delId}
     </delete>
+    <update id="updateBystock">
+        update goods set stock=#{stock} where id=#{id}
+    </update>
 </mapper>

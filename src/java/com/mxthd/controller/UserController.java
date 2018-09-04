@@ -80,6 +80,13 @@ public class UserController {
     }
 
     /**
+     * 修改头像
+     */
+    public JsonResult updateAvatar(String avatar,HttpSession httpSession){
+        return null;
+    }
+
+    /**
      *  用户登陆
      * @return
      */

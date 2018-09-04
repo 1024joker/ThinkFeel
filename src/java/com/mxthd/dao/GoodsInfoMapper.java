@@ -21,4 +21,5 @@ public interface GoodsInfoMapper {
     public Integer updateGoods(@Param("goods") Goods goods,@Param("editId") Integer editId);
     //    删除一个商品byid
     public int deleteGoods(Integer delId);
+    public void updateBystock(@Param("id") Integer id,@Param("stock") Integer stock);
 }

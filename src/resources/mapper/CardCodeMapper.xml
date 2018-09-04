@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mxthd.dao.CardCodeMapper">
+    <select id="findCountByGood" resultType="int">
+        select count(id) from cardcode where goods_id = #{gid} and state = 0
+    </select>
+</mapper>

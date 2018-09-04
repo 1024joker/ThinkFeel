@@ -9,6 +9,7 @@ public class Record {
     private Integer id; //消费记录id
     private Integer userId; //用户id
     private Integer goodsId; //商品id
+    private String goodsTitle;//标题
     private Integer cardcodeId; //卡密id
     private Date createDate; //创建时间
 
@@ -20,6 +21,13 @@ public class Record {
         this.id = id;
     }
 
+    public String getGoodsTitle() {
+        return goodsTitle;
+    }
+
+    public void setGoodsTitle(String goodsTitle) {
+        this.goodsTitle = goodsTitle;
+    }
     public Integer getUserId() {
         return userId;
     }

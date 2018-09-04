@@ -113,11 +113,11 @@
 
     </div>
     <ul class="pagination" style="margin-left: 20px">
-        <li th:class="${goods.hasPreviousPage?'':'disabled'}"><a href="" th:href="${goods.hasPreviousPage?'?p='+goods.prePage:'javascript:;'}" >&laquo;</a></li>
+        <li th:class="${goods.hasPreviousPage?'':'disabled'}"><a href="" th:href="${goods.hasPreviousPage?'?p='+goods.prePage + (t!=null?'&amp;t='+t:'')+(min!=null?'&amp;min='+min:'')+(max!=null?'&amp;max='+max:'') :'javascript:;'}" >&laquo;</a></li>
         <li th:class="${Pages==goods.pageNum?'active':''}" th:each="Pages,userStat:${goods.navigatepageNums}">
-            <a th:text="${Pages}" th:href="'?p='+${Pages}"></a>
+            <a th:text="${Pages}" th:href="'?p='+${Pages} + ${t!=null?'&amp;t='+t:''} + ${min!=null?'&amp;min='+min:''}+${max!=null?'&amp;max='+max:''}"></a>
         </li>
-        <li th:class="${goods.hasNextPage?'':'disabled'}"><a href="#" th:href="${goods.hasNextPage?'?p='+goods.nextPage:'javascript:;'}">&raquo;</a></li>
+        <li th:class="${goods.hasNextPage?'':'disabled'}"><a href="#" th:href="${goods.hasNextPage?'?p='+goods.nextPage  + (t!=null?'&amp;t='+t:'')+(min!=null?'&amp;min='+min:'')+(max!=null?'&amp;max='+max:'') :'javascript:;'}">&raquo;</a></li>
     </ul>
 </div>
 <!-- 引入侧边栏文件 -->

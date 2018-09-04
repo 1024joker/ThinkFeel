@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mxthd.dao.RecordMapper">
+    <select id="findByUid" resultType="com.mxthd.bean.Record">
+        select * from record where user_id=#{user_id}
+    </select>
+</mapper>

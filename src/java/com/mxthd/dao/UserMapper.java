@@ -30,4 +30,6 @@ public interface UserMapper {
 
     //后台根据用户的id来进行查询用户的积分信息
     public List<User> selectByPay(@Param("id") Integer id);
+    //修改头像
+    public void updateByavatar(@Param("id") Integer id,@Param("avatar") String avatar);
 }

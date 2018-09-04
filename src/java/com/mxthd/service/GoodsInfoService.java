@@ -63,4 +63,8 @@ public class GoodsInfoService {
     public int deleteById(Integer delId) {
         return goodsInfoMapper.deleteGoods(delId);
     }
+//    改库存
+    public void updateBystock(Integer id,Integer stock){
+        goodsInfoMapper.updateBystock(id,stock);
+    }
 }
