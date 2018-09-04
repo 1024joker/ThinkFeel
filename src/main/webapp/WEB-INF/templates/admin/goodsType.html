@@ -40,7 +40,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" lay-submit lay-filter="demo1" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" id="addGoodsType_sub">新增商品类型</button>
             </div>
         </div>
@@ -91,6 +91,13 @@
         var element = layui.element;
     });
 
+    /*更新回显信息*/
+    function refresh() {
+        layui.use('form', function () {
+            var form = layui.jquery, form = layui.form;
+            form.render();
+        });
+    }
     /*表单渲染 加表单自定义验证*/
     function renderform() {
         layui.use(['form', 'layedit', 'laydate'], function () {
@@ -103,20 +110,11 @@
                     if (value.length < 4) {
                         return "内容请输入至少4个字符";
                     }
-                },
-                goodsTitle: function (value, item) {
-                    if (value.trim() == '') {
-                        return "内容不能为空";
-                    }
-                },
-                goodsType: function (value, item) {
-                    if (value < 1) {
-                        return "请选择商品类型";
-                    }
                 }
             });
             //监听提交
             form.on('submit(demo1)', function (data) {
+                alert(data);
                 if ($("#submit").val() > 0) {
                     layer.msg(JSON.stringify("商品修改成功"), {
                         title: '商品修改状态'
@@ -132,13 +130,6 @@
         });
     }
 
-    /*更新回显信息*/
-    function refresh() {
-        layui.use('form', function () {
-            var form = layui.jquery, form = layui.form;
-            form.render();
-        });
-    }
 </script>
 
 <script type="text/javascript">
@@ -199,7 +190,9 @@
            success:function (result) {
                console.log(result);
                $("#goodsTypeAddModal").modal('hide');//关闭模态框
-               loadGoodsType();//重新加载表格函数
+               if(result == 1){
+                   loadGoodsType();//重新加载表格函数
+               }
            }
         });
     })
