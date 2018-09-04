@@ -122,13 +122,20 @@
             var goodsRepeat = $("<td></td>").append(item.type == '0' ? "不能重复兑换" : "可以重复兑换");//商品能否重复兑换
             var goodsPublish = $("<td></td>").append(item.post == '0' ? "上架" : "未上架");//商品是否上架
             /*按钮标签*/
+            var codeBtn = $("<button></button>").addClass("btn btn-info code_btn")
+                .append($("<span></span>").addClass("glyphicon glyphicon-barcode"))
+                .append("卡密");//查看卡密按钮
             var editBtn = $("<button></button>").addClass("btn btn-primary edit_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
                 .append("编辑");//编辑按钮
             var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash"))
                 .append("删除");//删除按钮
-            var btn = $("<span></span>").append(editBtn).append("<span> </span>").append(delBtn);
+            var btn = $("<span></span>").append(editBtn).append("<span> </span>").append(codeBtn).append("<span> </span>").append(delBtn);
+            /*将员工id存放到编辑按钮里面，点击的时候，将id值传进另一个页面*/
+            codeBtn.attr("code_id", item.id);
+            /*将当前员工页码数存进按钮进行传值，在修改完成之后 返回当前页码*/
+            codeBtn.attr("code_pg", result.data.pageNum);
             /*将员工id存放到编辑按钮里面，点击的时候，将id值传进另一个页面*/
             editBtn.attr("edit_id", item.id);
             /*将当前员工页码数存进按钮进行传值，在修改完成之后 返回当前页码*/
@@ -303,6 +310,12 @@
         });
     });
 
+    /*根据id 查询该id 的卡密*/
+    $(document).on("click",".code_btn",function () {
+        var goodsId = $(this).attr("code_id");        //商品id
+        var pageNum = $(this).attr("code_pg");      //商品当前页码
+        window.location.href = "/ht/goodsCode?goodsId=" + goodsId + "&pageNum=" + pageNum;
+    })
 </script>
 </body>
 </html>
