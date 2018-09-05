@@ -59,7 +59,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品类型</label>
                     <div class="layui-input-block" id="goods_type">
-                        <select id="goods_type_select" lay-verify="goodsType" name="goodsclassId" lay-filter="gt">
+                        <select id="goods_type_select" required lay-verify="goodsType" name="goodsclassId" lay-filter="gt">
                         </select>
                     </div>
                 </div>
@@ -178,18 +178,13 @@
             form.render('select');
             //自定义验证规则
             form.verify({
-                goodsTitle: function (value, item) {
-                    if (value.length < 4) {
-                        return "内容请输入至少4个字符";
+                goodsTitle: function (value) {
+                    if (value.trim() == '' || value.length < 3) {
+                        return "内容不能为空,且不能小于三个字符";
                     }
                 },
-                goodsTitle: function (value, item) {
-                    if (value.trim() == '') {
-                        return "内容不能为空";
-                    }
-                },
-                goodsType: function (value, item) {
-                    if (value < 1) {
+                goodsType: function (value) {
+                    if (value=="请选择") {
                         return "请选择商品类型";
                     }
                 }
@@ -315,8 +310,7 @@
         var title = $("#goods_title_input").val();
         if (editId > 0) {
             /*ajax修改商品信息*/
-            // renderform();
-            if (title.length >= 4 && title.trim() != '') {
+            if (title.length >= 3 && title.trim() != '') {
                 $.ajax({
                     url: "/admin/updateGoods?editId=" + editId,
                     type: "POST",
@@ -329,7 +323,7 @@
             }
         } else {
             /*ajax新增商品信息*/
-            if (title.length >= 4) {
+            if (title.length >= 3) {
                 $.ajax({
                     url: "/admin/addGoods",
                     type: "POST",
