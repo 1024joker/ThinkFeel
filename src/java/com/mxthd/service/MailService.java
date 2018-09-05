@@ -24,7 +24,7 @@ public class MailService {
     @Autowired
     JavaMailSender mailSender;
 
-    private String FORMUSER = "229921717@qq.com";
+    private String FORMUSER = "1456766773@qq.com";
 
 
     /**
